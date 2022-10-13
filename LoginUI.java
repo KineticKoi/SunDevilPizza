@@ -9,14 +9,15 @@ import javafx.scene.text.Font;
 
 public class LoginUI extends Pane {
     //Declaring Variables...
-    String type;
-    Label headerLabel;
-    TextField userNameField;
-    PasswordField passwordField;
-    Button signInButton;
-    Button backButton;
-    Hyperlink employeeSignInLink;
-    int posy = 360;
+    private String type;
+    private Label headerLabel;
+    private TextField userNameField;
+    private PasswordField passwordField;
+    private Button signInButton;
+    private Label loginFailedLabel;
+    private Button backButton;
+    private Hyperlink employeeSignInLink;
+    private int posy = 320;
     
     //Constructor
     LoginUI(String type, int width, int height) {
@@ -44,31 +45,46 @@ public class LoginUI extends Pane {
         signInButton.setPrefSize(120, 40);
         signInButton.layoutXProperty().bind(this.widthProperty().subtract(signInButton.getPrefWidth()).divide(2));
         signInButton.layoutYProperty().set(posy + 180);
+        signInButton.setOnAction(new LoginControlsHandler());
         employeeSignInLink = new Hyperlink("Employee Login →");
         employeeSignInLink.setPrefWidth(120);
         employeeSignInLink.layoutXProperty().bind(this.widthProperty().subtract(employeeSignInLink.getPrefWidth()).divide(2));
         employeeSignInLink.layoutYProperty().set(posy + 240);
-        employeeSignInLink.setOnAction(new ControlsHandler());
+        employeeSignInLink.setOnAction(new LoginControlsHandler());
         if (type.equalsIgnoreCase("employee")) {
             employeeSignInLink.setVisible(false);
         }
+        loginFailedLabel = new Label("Login Denied");
+        loginFailedLabel.setStyle("-fx-text-fill: red;");
+        loginFailedLabel.layoutXProperty().bind(this.widthProperty().subtract(loginFailedLabel.getPrefWidth()).divide(2));
+        loginFailedLabel.layoutYProperty().set(posy + 300);
+        loginFailedLabel.setVisible(false);
         backButton = new ButtonMaker("back");
-        backButton.setOnAction(new ControlsHandler());
-        this.getChildren().addAll(headerLabel, userNameField, passwordField, signInButton, employeeSignInLink, backButton);
+        backButton.setOnAction(new LoginControlsHandler());
+        this.getChildren().addAll(headerLabel, userNameField, passwordField, signInButton, employeeSignInLink, loginFailedLabel, backButton);
     }
     
-    private class ControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class LoginControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick();
+            if (event.getSource() == signInButton) {
+                if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
+                    
+                    SunDevilPizza.newRoot(new AdminPortal(SunDevilPizza.width, SunDevilPizza.height));
+                }
+                else {
+                    loginFailedLabel.setVisible(true);
+                }
+            }
             if (event.getSource() == employeeSignInLink) {
-                SunDevilPizza.sceneSwitcher(new LoginUI("EMPLOYEE", SunDevilPizza.width, SunDevilPizza.height));
+                SunDevilPizza.newRoot(new LoginUI("EMPLOYEE", SunDevilPizza.width, SunDevilPizza.height));
             }
             if (event.getSource() == backButton && type.equalsIgnoreCase("ASURITE")) {
-                SunDevilPizza.sceneSwitcher(new WelcomePage(SunDevilPizza.width, SunDevilPizza.height));
+                SunDevilPizza.previousRoot();
             }
             if (event.getSource() == backButton && type.equalsIgnoreCase("EMPLOYEE")) {
-                SunDevilPizza.sceneSwitcher(new LoginUI("ASURITE", SunDevilPizza.width, SunDevilPizza.height));
+                SunDevilPizza.previousRoot();
             }
         }
     }

@@ -13,7 +13,7 @@ public class ButtonMaker extends Button {
             }
             catch(FileNotFoundException e) {     
             }   
-            relocate(1760, 900);
+            relocate(1700, 900);
         }
         else if (type.equalsIgnoreCase("order"))  {
             try {
@@ -28,7 +28,7 @@ public class ButtonMaker extends Button {
             }
             catch(FileNotFoundException e) {     
             }
-            relocate(1760, 900);
+            relocate(1700, 900);
         }
     }
 }

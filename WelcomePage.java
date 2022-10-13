@@ -27,25 +27,24 @@ public class WelcomePage extends Pane {
         catch(Exception e) {     
         }
         loginButton = new ButtonMaker("login");
-        loginButton.setOnAction(new ButtonHandler());
+        loginButton.setOnAction(new WelcomePageControlsHandler());
         startButton = new ButtonMaker("order");
         startButton.layoutXProperty().bind(this.widthProperty().subtract(startButton.widthProperty()).divide(2));
-        startButton.setLayoutY(600);
-        startButton.setOnAction(new ButtonHandler());
+        startButton.setLayoutY(560);
+        startButton.setOnAction(new WelcomePageControlsHandler());
         getChildren().addAll(mainLogoBanner, loginButton, startButton);
     }
     
-    private class ButtonHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class WelcomePageControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick();
             if (event.getSource() == loginButton) {
-                SunDevilPizza.sceneSwitcher(new LoginUI("ASURITE", SunDevilPizza.width, SunDevilPizza.height));
+                SunDevilPizza.newRoot(new LoginUI("ASURITE", SunDevilPizza.width, SunDevilPizza.height));
             }
             else if (event.getSource() == startButton) {
-                SunDevilPizza.sceneSwitcher(new PizzaBuilder(SunDevilPizza.width, SunDevilPizza.height));
+                SunDevilPizza.newRoot(new PizzaBuilder(SunDevilPizza.width, SunDevilPizza.height));
             }
-            
         }
     }
 }

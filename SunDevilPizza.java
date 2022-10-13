@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.ImageCursor;
@@ -8,6 +10,7 @@ import javafx.stage.Stage;
 
 public class SunDevilPizza extends Application { //Launches the main application
     static final int width = 1920, height = 1080; //Initializes the width and height for the app window
+    private static List<Parent> previousRootNodes = new ArrayList<>();
     private static Scene currentScene;
     
     @Override
@@ -34,7 +37,12 @@ public class SunDevilPizza extends Application { //Launches the main application
         launch(args);
     }
     
-    public static void sceneSwitcher(Parent node) {
+    public static void newRoot(Parent node) {
+        previousRootNodes.add(currentScene.getRoot());
         currentScene.setRoot(node);
+    }
+    public static void previousRoot() {
+        previousRootNodes.remove(currentScene.getRoot());
+        currentScene.setRoot(previousRootNodes.get(previousRootNodes.size() - 1));
     }
 }    
