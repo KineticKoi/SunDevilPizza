@@ -43,8 +43,9 @@ public class PizzaBuilder extends Pane {
         Pane toppingsBasePane = new Pane();
         toppingsBasePane.setPrefWidth(400);
         int toppingsSelectionBarBaseY = 5;
+        String[] toppingButtonText = new String[] {"Lt", "Reg", "Ex"};
         for (String currentTopping : toppingsList) {
-            SelectionPane bar = new SelectionPane("topping", currentTopping, 3);
+            SelectionPane bar = new SelectionPane("topping", currentTopping, 3, toppingButtonText);
             bar.relocate(5, toppingsSelectionBarBaseY);
             toppingsSelectionBarBaseY += 40;
             toppingsBasePane.getChildren().add(bar);

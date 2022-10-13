@@ -15,7 +15,7 @@ public class SelectionPane extends Pane {
     private final String defaultButtonStyle = "-fx-text-fill: black; -fx-background-color: lightgrey;";
     
     //Constructor
-    SelectionPane(String selectionType, String labelText, int numOfButtons) {
+    SelectionPane(String selectionType, String labelText, int numOfButtons, String[] buttonText) {
         setWidth(600); //Sets this pane width
         setHeight(100); //Sets this pane height
         this.selectionType = selectionType;
@@ -25,16 +25,12 @@ public class SelectionPane extends Pane {
         getChildren().add(toppingLabel);
         for (int i = 0; i < numOfButtons; i++) {
             buttonList.add(new Button());
+            buttonList.get(i).setText(buttonText[i]);
             buttonList.get(i).setPrefSize(40, 20);
             buttonList.get(i).relocate(360 + ((i + 1) * 50), 5);
             buttonList.get(i).setStyle(defaultButtonStyle);
             buttonList.get(i).setOnAction(new ControlsHandler());
             getChildren().add(buttonList.get(i));
-        }
-        if (selectionType.equals("topping")) {
-            buttonList.get(0).setText("Lt");
-            buttonList.get(1).setText("Reg");
-            buttonList.get(2).setText("Ex");
         }
     }
     
