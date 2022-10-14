@@ -2,18 +2,28 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
 public class PizzaBuilder extends Pane {
     //Declaring Variables...
+    private final String[] toppingsList = new String[] {"Pepperoni", "Sausage", "Mushroom", "Green Pepper", "Sardines", "Tomato", "Deez Nuts"};
+    private final String[] sizeButtonText = new String[] {"S", "M", "L"};
+    private final String[] typeButtonText = new String[] {"C", "M", "V"};
+    private final String[] toppingButtonText = new String[] {"Lt", "Reg", "Ex"};
     private Button startButton;
     private Button backButton;
     private Label customizationLabel;
     private Label pizzaToppingsLabel;
     private ScrollPane toppingsSP;
+    private LargeSelectionUI sizeSelector;
+    private LargeSelectionUI pizzaBaseSelector;
     private Label orderSummaryLabel;
-    private String[] toppingsList = new String[] {"Pepperoni", "Sausage", "Mushroom", "Green Pepper", "Sardines", "Tomato", "Deez Nuts"};
+    private TextField orderSummaryTextField;
+    private String pizzaSize;
+    private String pizzaBase;
+    private String[] toppings;
     
     //Constructor
     PizzaBuilder(int width, int height) {
@@ -31,21 +41,29 @@ public class PizzaBuilder extends Pane {
         toppingsSP.setPrefWidth(600);
         toppingsSP.setPrefHeight(200);
         toppingsSP.setContent(createToppingsPane());
+        sizeSelector = new LargeSelectionUI("size", "Size:", 3, sizeButtonText);
+        sizeSelector.relocate(100, 160);
+        pizzaBaseSelector = new LargeSelectionUI("type", "Type:", 3, typeButtonText);
+        pizzaBaseSelector.relocate(100, 320);
         orderSummaryLabel = new Label("Order Summary:");
         orderSummaryLabel.relocate(1000, 520);
         orderSummaryLabel.setFont(new Font("Arial", 40));
+        orderSummaryTextField = new TextField();
+        orderSummaryTextField.setPrefWidth(600);
+        orderSummaryTextField.setPrefHeight(200);
+        orderSummaryTextField.relocate(1000, 600);
+        orderSummaryTextField.setEditable(false);
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new PizzaBuilderControlsHandler());
-        getChildren().addAll(customizationLabel, pizzaToppingsLabel, toppingsSP, orderSummaryLabel, backButton);
+        getChildren().addAll(customizationLabel, sizeSelector, pizzaBaseSelector, pizzaToppingsLabel, toppingsSP, orderSummaryLabel, orderSummaryTextField, backButton);
     }
    
     private Pane createToppingsPane() {
         Pane toppingsBasePane = new Pane();
         toppingsBasePane.setPrefWidth(400);
         int toppingsSelectionBarBaseY = 5;
-        String[] toppingButtonText = new String[] {"Lt", "Reg", "Ex"};
         for (String currentTopping : toppingsList) {
-            SelectionPane bar = new SelectionPane("topping", currentTopping, 3, toppingButtonText);
+            SelectionBar bar = new SelectionBar("topping", currentTopping, 3, toppingButtonText);
             bar.relocate(5, toppingsSelectionBarBaseY);
             toppingsSelectionBarBaseY += 40;
             toppingsBasePane.getChildren().add(bar);
@@ -53,6 +71,7 @@ public class PizzaBuilder extends Pane {
         return toppingsBasePane;
     }
     
+    //Handler for all UI controls...
     private class PizzaBuilderControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {

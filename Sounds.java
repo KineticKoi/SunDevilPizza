@@ -3,16 +3,16 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+//Sounds class that manages all app audio...
 public class Sounds {
-    static Clip clip;
     
+    //Takes a filepath parameter and plays that sound...
     public static void playSound(String filepath) {
         try {
-            File musicPath = new File(filepath);
-            
-            if (musicPath.exists()) {
+            File musicPath = new File(filepath); //Gets sound file
+            if (musicPath.exists()) { //If sound file exists...
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                clip = AudioSystem.getClip();
+                Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 clip.start();
             }
@@ -21,11 +21,12 @@ public class Sounds {
             e.printStackTrace();
         }
     }
+    
+    //Plays button click
     public static void playButtonClick() {
         try {
-            File musicPath = new File("click.wav");
-            
-            if (musicPath.exists()) {
+            File musicPath = new File("click.wav"); //Gets sound file
+            if (musicPath.exists()) { //If sound file exists...
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
