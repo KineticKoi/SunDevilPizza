@@ -86,7 +86,7 @@ public class LoginUI extends Pane {
             Sounds.playButtonClick(); //Plays button click sound
             if (event.getSource() == signInButton) { //Sign-in button actions...
                 if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
-                    
+                    SunDevilPizza.session.setUser(new Employee());
                     SunDevilPizza.newRoot(new AdminPortal(SunDevilPizza.width, SunDevilPizza.height));
                 }
                 else {

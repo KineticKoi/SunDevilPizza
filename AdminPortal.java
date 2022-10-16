@@ -1,22 +1,13 @@
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class AdminPortal extends Pane{
     //Declaring Variables...
-    private String type;
     private Label headerLabel;
-    private TextField userNameField;
-    private PasswordField passwordField;
-    private Button signInButton;
     private Button backButton;
-    private Hyperlink employeeSignInLink;
-    private int posy = 320;
     
     //Constructor
     AdminPortal(int width, int height) {

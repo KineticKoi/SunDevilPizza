@@ -8,12 +8,12 @@ import javafx.scene.text.Font;
 
 public class PizzaBuilder extends Pane {
     //Declaring Variables...
-    private final String[] toppingsList = new String[] {"Pepperoni", "Sausage", "Mushroom", "Green Pepper", "Sardines", "Tomato"};
+    private final String[] toppingsList = new String[] {"Pepperoni", "Sausage", "Mushroom", "Green Pepper", "Sardines", "Tomato", "Deez Nuts"};
     private final String[] sizeButtonText = new String[] {"S", "M", "L"};
     private final String[] typeButtonText = new String[] {"C", "M", "V"};
     private final String[] toppingButtonText = new String[] {"Lt", "Reg", "Ex"};
-    private Button startButton;
     private Button backButton;
+    private Button forwardButton;
     private Label customizationLabel;
     private Label pizzaToppingsLabel;
     private ScrollPane toppingsSP;
@@ -55,7 +55,9 @@ public class PizzaBuilder extends Pane {
         orderSummaryTextField.setEditable(false);
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new PizzaBuilderControlsHandler());
-        getChildren().addAll(customizationLabel, sizeSelector, pizzaBaseSelector, pizzaToppingsLabel, toppingsSP, orderSummaryLabel, orderSummaryTextField, backButton);
+        forwardButton = new ButtonMaker("forward");
+        forwardButton.setOnAction(new PizzaBuilderControlsHandler());
+        getChildren().addAll(customizationLabel, sizeSelector, pizzaBaseSelector, pizzaToppingsLabel, toppingsSP, orderSummaryLabel, orderSummaryTextField, backButton, forwardButton);
     }
    
     private Pane createToppingsPane() {
@@ -78,6 +80,11 @@ public class PizzaBuilder extends Pane {
             Sounds.playButtonClick();
             if (event.getSource() == backButton) {
                 SunDevilPizza.previousRoot();
+            }
+            if (event.getSource() == forwardButton) {
+                if (SunDevilPizza.nextRoot() == false) {
+                    SunDevilPizza.newRoot(new OrderSummaryUI(SunDevilPizza.width, SunDevilPizza.height));
+                }
             }
         }
     }

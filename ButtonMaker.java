@@ -28,7 +28,15 @@ public class ButtonMaker extends Button {
             }
             catch(FileNotFoundException e) {     
             }
-            relocate(1700, 900);
+            relocate(1640, 900);
+        }
+       else if (type.equalsIgnoreCase("forward")) {
+            try {
+                setGraphic(new ImageView(new Image(new FileInputStream("forwardarrow.png"))));
+            }
+            catch(FileNotFoundException e) {     
+            }
+            relocate(1740, 900);
         }
     }
 }

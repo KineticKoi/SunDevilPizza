@@ -43,6 +43,7 @@ public class WelcomePage extends Pane {
                 SunDevilPizza.newRoot(new LoginUI("ASURITE", SunDevilPizza.width, SunDevilPizza.height));
             }
             else if (event.getSource() == startButton) {
+                SunDevilPizza.clearRoots();
                 SunDevilPizza.newRoot(new PizzaBuilder(SunDevilPizza.width, SunDevilPizza.height));
             }
         }
