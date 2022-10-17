@@ -66,7 +66,6 @@ public class SunDevilPizza extends Application { //Launches the main application
     
     //Sets Root to previous node
     public static void previousRoot() {
-        System.out.println(currentRootIndex);
         if (currentRootIndex == 1) {
             home();
         }

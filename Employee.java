@@ -6,6 +6,6 @@ public class Employee extends User implements Serializable {
     
     //Default Constructor
     Employee() {
-        super("employee");
+        super("EMPLOYEE");
     }
 }

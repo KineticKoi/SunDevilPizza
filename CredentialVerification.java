@@ -1,6 +1,6 @@
 
 public class CredentialVerification {
-    private static final String[] dummyASURITECredentials = new String[] {"customer", "customer"};
+    private static final String[] dummyASURITECredentials = new String[] {"7000", "customer"};
     private static final String[] dummyAdminCredentials = new String[] {"admin", "admin"};
     
     public static String loginCheck(String loginType, String userName, String password) {
@@ -11,5 +11,15 @@ public class CredentialVerification {
             return "CustomerVerified";
         }
         return "Denied";
+    }
+    
+    private static boolean isAnInteger(String stringToCheck) { 
+        try { 
+            Integer.parseInt(stringToCheck); 
+            return true; 
+        } 
+        catch (NumberFormatException e) {  
+            return false; 
+        }
     }
 }

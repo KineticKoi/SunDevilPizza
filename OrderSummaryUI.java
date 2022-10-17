@@ -14,6 +14,7 @@ public class OrderSummaryUI extends Pane {
     private Button verifyButton;
     private Label orderSummaryLabel;
     private Label completePurchaseLabel;
+    private Label signedInAsLabel;
     private TextField orderSummaryTextField;
     private TextField asuriteIDField;
     private PasswordField passwordField;
@@ -56,6 +57,12 @@ public class OrderSummaryUI extends Pane {
         passwordField.setStyle("-fx-background-color: lightgrey;");
         passwordField.setVisible(false);
         
+        signedInAsLabel = new Label("");
+        signedInAsLabel.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2));
+        signedInAsLabel.layoutYProperty().set(600);
+        signedInAsLabel.setFont(new Font("Arial", 40));
+        signedInAsLabel.setVisible(false);
+        
         verifyButton = new Button("Verify");
         verifyButton.setPrefSize(160, 40);
         verifyButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
@@ -80,7 +87,17 @@ public class OrderSummaryUI extends Pane {
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new OrderSummaryControlsHandler());
         
-        getChildren().addAll(orderSummaryLabel, orderSummaryTextField, completePurchaseLabel, asuriteIDField, verifyButton, passwordField, emailField, purchaseButton, backButton);  
+        if (SunDevilPizza.session.getUser() != null) {
+            if (SunDevilPizza.session.getUser().getType().equalsIgnoreCase("CUSTOMER")) {
+                asuriteIDField.setVisible(false);
+                verifyButton.setVisible(false);
+                Customer customer = (Customer)SunDevilPizza.session.getUser();
+                signedInAsLabel.setText("Signed in as ASURITE ID: " + customer.getIDNum());
+                signedInAsLabel.setVisible(true);
+            }
+        }
+        
+        getChildren().addAll(orderSummaryLabel, orderSummaryTextField, completePurchaseLabel, asuriteIDField, signedInAsLabel, verifyButton, passwordField, emailField, purchaseButton, backButton);  
     }
     
     //Handler for all UI controls...

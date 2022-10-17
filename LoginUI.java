@@ -13,7 +13,8 @@ public class LoginUI extends Pane {
     private Label headerLabel;
     private TextField userNameField;
     private PasswordField passwordField;
-    private Button signInButton;
+    private Button signInButton;    
+    private Button signOutButton;
     private Label loginFailedLabel;
     private Button backButton;
     private Hyperlink employeeSignInLink;
@@ -55,6 +56,15 @@ public class LoginUI extends Pane {
         signInButton.layoutYProperty().set(posy + 180);
         signInButton.setOnAction(new LoginControlsHandler());
         
+        //Sign-out button attributes...
+        signOutButton = new Button("Sign Out");
+        signOutButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
+        signOutButton.setPrefSize(120, 40);
+        signOutButton.layoutXProperty().bind(this.widthProperty().subtract(signInButton.getPrefWidth()).divide(2));
+        signOutButton.layoutYProperty().set(posy + 180);
+        signOutButton.setVisible(false);
+        signOutButton.setOnAction(new LoginControlsHandler());
+        
         //Employee sign-in hyperlink attributes...
         employeeSignInLink = new Hyperlink("Employee Login →");
         employeeSignInLink.setPrefWidth(120);
@@ -75,8 +85,18 @@ public class LoginUI extends Pane {
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new LoginControlsHandler());
         
+        //USER ALREADY SIGNED IN
+        if (SunDevilPizza.session.getUser() != null) {
+            headerLabel.setVisible(false);
+            userNameField.setVisible(false);
+            passwordField.setVisible(false);
+            signInButton.setVisible(false);
+            employeeSignInLink.setVisible(false);
+            signOutButton.setVisible(true);
+        }
+        
         //Add everything to pane...
-        this.getChildren().addAll(headerLabel, userNameField, passwordField, signInButton, employeeSignInLink, loginFailedLabel, backButton);
+        this.getChildren().addAll(headerLabel, userNameField, passwordField, signInButton, signOutButton, employeeSignInLink, loginFailedLabel, backButton);
     }
     
     //Handler for all UI controls...
@@ -86,7 +106,7 @@ public class LoginUI extends Pane {
             Sounds.playButtonClick(); //Plays button click sound
             if (event.getSource() == signInButton) { //Sign-in button actions...
                 if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("CustomerVerified")) {
-                    SunDevilPizza.session.setUser(new Customer());
+                    SunDevilPizza.session.setUser(new Customer(Integer.valueOf(userNameField.getText())));
                     SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));
                 }
                 else if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
@@ -96,6 +116,10 @@ public class LoginUI extends Pane {
                 else {
                     loginFailedLabel.setVisible(true);
                 }
+            }
+            if (event.getSource() == signOutButton) {
+                SunDevilPizza.session.setUser(null);
+                SunDevilPizza.home();
             }
             if (event.getSource() == employeeSignInLink) { //Employee sign-in hyperlink actions...
                 SunDevilPizza.newRoot(new LoginUI("EMPLOYEE", SunDevilPizza.width, SunDevilPizza.height));
