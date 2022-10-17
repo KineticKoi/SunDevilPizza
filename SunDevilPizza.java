@@ -18,7 +18,7 @@ public class SunDevilPizza extends Application { //Launches the main application
     
     @Override
     public void start(Stage stage) throws Exception {
-        scene = new Scene(new WelcomePage(width, height), width, height); //Generates a new GUI scene
+        scene = new Scene(new WelcomeUI(width, height), width, height); //Generates a new GUI scene
         newRoot(scene.getRoot());
         stage.setTitle("SunDevil Pizza"); //Sets the window title
         stage.setScene(scene); //Sets the window scene

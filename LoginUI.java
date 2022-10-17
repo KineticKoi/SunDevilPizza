@@ -85,9 +85,13 @@ public class LoginUI extends Pane {
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick(); //Plays button click sound
             if (event.getSource() == signInButton) { //Sign-in button actions...
-                if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
+                if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("CustomerVerified")) {
+                    SunDevilPizza.session.setUser(new Customer());
+                    SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));
+                }
+                else if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
                     SunDevilPizza.session.setUser(new Employee());
-                    SunDevilPizza.newRoot(new AdminPortal(SunDevilPizza.width, SunDevilPizza.height));
+                    SunDevilPizza.newRoot(new AdminPortalUI(SunDevilPizza.width, SunDevilPizza.height));
                 }
                 else {
                     loginFailedLabel.setVisible(true);
