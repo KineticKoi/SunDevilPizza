@@ -29,7 +29,7 @@ public class CustomerPortalUI extends Pane{
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick();
             if (event.getSource() == homeButton) {
-                SunDevilPizza.clearRoots();
+                SunDevilPizza.home();
             }
         }
     }

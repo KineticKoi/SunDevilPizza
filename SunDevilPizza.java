@@ -61,12 +61,19 @@ public class SunDevilPizza extends Application { //Launches the main application
         scene.setRoot(node);
         rootNodes.add(scene.getRoot());
         currentRootIndex++;
+
     }
     
     //Sets Root to previous node
     public static void previousRoot() {
-        scene.setRoot(rootNodes.get(currentRootIndex - 1));
-        currentRootIndex--;
+        System.out.println(currentRootIndex);
+        if (currentRootIndex == 1) {
+            home();
+        }
+        else {
+            scene.setRoot(rootNodes.get(currentRootIndex - 1));
+            currentRootIndex--;
+        }   
     }
     
     public static boolean nextRoot() {
@@ -78,8 +85,8 @@ public class SunDevilPizza extends Application { //Launches the main application
         return false;
     }
     
-    public static void clearRoots() {
-        for (int i = 1; i < rootNodes.size(); i++) {
+    public static void home() {
+        for (int i = rootNodes.size() - 1; i > 0; i--) {
             rootNodes.remove(i);
         }
         currentRootIndex = 0;

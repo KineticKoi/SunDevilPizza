@@ -91,6 +91,9 @@ public class OrderSummaryUI extends Pane {
             if (event.getSource() == backButton) {
                 SunDevilPizza.previousRoot();
             }
+            else if(event.getSource() == purchaseButton) {
+                SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width, SunDevilPizza.height));
+            }
         }
     }
 }

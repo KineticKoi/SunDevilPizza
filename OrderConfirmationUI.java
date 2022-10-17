@@ -39,7 +39,7 @@ public class OrderConfirmationUI extends Pane {
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick();
             if (event.getSource() == confirmationButton) {
-                SunDevilPizza.clearRoots();
+                SunDevilPizza.home();
             }
         }
     }
