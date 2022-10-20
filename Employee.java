@@ -1,8 +1,6 @@
-import java.io.Serializable;
 
 //Employee class...
-public class Employee extends User implements Serializable {
-    private static final long serialVersionUID = 42069L;
+public class Employee extends User {
     
     //Default Constructor
     Employee() {

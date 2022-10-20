@@ -1,7 +1,6 @@
 
-import java.io.Serializable;
-
-public class Pizza implements Serializable {
+//Pizza class containing specific pie information
+public class Pizza {
     private String type;
     private String size;
     private String[] toppings;

@@ -1,8 +1,6 @@
-import java.io.Serializable;
 
 //Customer class containing orders and customer info...
-public class Customer extends User implements Serializable {
-    private static final long serialVersionUID = 42069L;
+public class Customer extends User {
     //Declaring Variables...
     private int asuriteIDNum;
     private Order[] orders;
