@@ -111,7 +111,7 @@ public class LoginUI extends Pane {
                 }
                 else if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
                     SunDevilPizza.session.setUser(new Employee());
-                    SunDevilPizza.newRoot(new AdminPortalUI(SunDevilPizza.width, SunDevilPizza.height));
+                    SunDevilPizza.newRoot(new EmployeePortalUI(SunDevilPizza.width, SunDevilPizza.height));
                 }
                 else {
                     loginFailedLabel.setVisible(true);

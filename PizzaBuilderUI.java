@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 
 public class PizzaBuilderUI extends Pane {
     //Declaring Variables...
-    private final String[] toppingsList = new String[] {"Pepperoni", "Sausage", "Mushroom", "Green Pepper", "Sardines", "Tomato", "Deez Nuts"};
+    private final String[] toppingsList = new String[] {"Mushroom", "Onion", "Olives", "Extra Cheese"};
     private final String[] sizeButtonText = new String[] {"S", "M", "L"};
     private final String[] typeButtonText = new String[] {"C", "M", "V"};
     private final String[] toppingButtonText = new String[] {"Lt", "Reg", "Ex"};

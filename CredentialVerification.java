@@ -1,7 +1,7 @@
 
 public class CredentialVerification {
     private static final String[] dummyASURITECredentials = new String[] {"7000", "customer"};
-    private static final String[] dummyAdminCredentials = new String[] {"admin", "admin"};
+    private static final String[] dummyAdminCredentials = new String[] {"employee", "employee"};
     
     public static String loginCheck(String loginType, String userName, String password) {
         if (loginType.equalsIgnoreCase("employee") && userName.equals(dummyAdminCredentials[0]) && password.equals(dummyAdminCredentials[1])) {
