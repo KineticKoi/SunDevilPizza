@@ -3,6 +3,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -15,23 +16,24 @@ public class OrderSummaryUI extends Pane {
     private Label orderSummaryLabel;
     private Label completePurchaseLabel;
     private Label signedInAsLabel;
-    private TextField orderSummaryTextField;
+    private TextArea orderSummaryTextField;
     private TextField asuriteIDField;
     private PasswordField passwordField;
     private TextField emailField;
 
-    OrderSummaryUI(int width, int height) {
+    OrderSummaryUI(int width, int height, String orderSummary) {
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
         
-        orderSummaryTextField = new TextField();
+        orderSummaryTextField = new TextArea();
         orderSummaryTextField.setPrefWidth(600);
         orderSummaryTextField.setPrefHeight(200);
         orderSummaryTextField.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2));
         orderSummaryTextField.layoutYProperty().set(220);
         orderSummaryTextField.setEditable(false);
         orderSummaryTextField.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
+        orderSummaryTextField.setText(orderSummary);
         
         orderSummaryLabel = new Label("Order Summary:");
         orderSummaryLabel.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2));
@@ -63,7 +65,7 @@ public class OrderSummaryUI extends Pane {
         signedInAsLabel.setFont(new Font("Arial", 40));
         signedInAsLabel.setVisible(false);
         
-        verifyButton = new Button("Verify");
+        verifyButton = new Button("Verify ID");
         verifyButton.setPrefSize(160, 40);
         verifyButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
         verifyButton.layoutXProperty().bind(this.widthProperty().subtract(verifyButton.widthProperty()).divide(2));
@@ -87,7 +89,7 @@ public class OrderSummaryUI extends Pane {
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new OrderSummaryControlsHandler());
         
-        if (SunDevilPizza.session.getUser() != null) {
+        if (((Customer)SunDevilPizza.session.getUser()).getIDNum() != 0) {
             if (SunDevilPizza.session.getUser().getType().equalsIgnoreCase("CUSTOMER")) {
                 asuriteIDField.setVisible(false);
                 verifyButton.setVisible(false);
@@ -108,8 +110,44 @@ public class OrderSummaryUI extends Pane {
             if (event.getSource() == backButton) {
                 SunDevilPizza.previousRoot();
             }
-            else if(event.getSource() == purchaseButton) {
-                SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width, SunDevilPizza.height));
+            if (event.getSource() == verifyButton) {
+                boolean exists = FileManager.existingCustomer(asuriteIDField.getText() + ".dat");
+                if (exists == true) {
+                    verifyButton.setVisible(false);
+                    passwordField.setPromptText("Enter your password");
+                    passwordField.setVisible(true);
+                }
+                else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText())){
+                    ((Customer)SunDevilPizza.session.getUser()).setIDNum(Integer.parseInt(asuriteIDField.getText()));
+                    verifyButton.setVisible(false);
+                    passwordField.setPromptText("Create a new password");
+                    passwordField.setVisible(true);
+                }
+                else {
+                    completePurchaseLabel.setStyle("-fx-text-fill: red;");
+                }
+            }
+            if(event.getSource() == purchaseButton) {
+                boolean exists = FileManager.existingCustomer(asuriteIDField.getText() + ".dat");
+                if (!asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
+                    if (exists) {
+                        SunDevilPizza.session.setUser(CredentialVerification.loginCheck("asurite", asuriteIDField.getText(), passwordField.getText()));
+                    }
+                    else {
+                        ((Customer)SunDevilPizza.session.getUser()).setPassword(passwordField.getText());
+                    }
+                    Customer customer = ((Customer)SunDevilPizza.session.getUser());
+                    customer.getCurrentOrder().setEmail(emailField.getText());
+                    String orderNumber = SunDevilPizza.session.generateOrderNumber();
+                    customer.getCurrentOrder().setOrderNumber(orderNumber);
+                    customer.addOrder(customer.getCurrentOrder());
+                    customer.resetCurrentOrder();
+                    FileManager.saveCurrentCustomer();
+                    SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width, SunDevilPizza.height, orderNumber));
+                }
+                else {
+                    completePurchaseLabel.setStyle("-fx-text-fill: red;");
+                }
             }
         }
     }

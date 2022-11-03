@@ -27,10 +27,10 @@ public class LargeSelectionBar extends Pane {
         for (int i = 0; i < numOfButtons; i++) {
             buttonList.add(new Button());
             buttonList.get(i).setText(buttonText[i]);
-            buttonList.get(i).setPrefSize(80, 80);
-            buttonList.get(i).relocate((i * 160), 60);
+            buttonList.get(i).setPrefSize(220, 80);
+            buttonList.get(i).relocate((i * 260), 60);
             buttonList.get(i).setStyle(defaultButtonStyle);
-            buttonList.get(i).setFont(new Font("Arial", 32));
+            buttonList.get(i).setFont(new Font("Arial", 28));
             buttonList.get(i).setOnAction(new ControlsHandler());
             getChildren().add(buttonList.get(i));
         }
@@ -43,10 +43,26 @@ public class LargeSelectionBar extends Pane {
             Sounds.playButtonClick(); //Plays button click sound
             if (currentSelection == (Button)event.getSource()) {
                 currentSelection.setStyle(defaultButtonStyle);
+                if (selectionType.equals("size")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setSize(null);
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
+                }
+                else if (selectionType.equals("type")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setType(null);
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
+                }
                 currentSelection = null;
             }
             else {
                 currentSelection = (Button)event.getSource();
+                if (selectionType.equals("size")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setSize(((Button)event.getSource()).getText());
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
+                }
+                else if (selectionType.equals("type")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setType(((Button)event.getSource()).getText());
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
+                }
                 for (int i = 0; i < buttonList.size(); i++) {
                     buttonList.get(i).setStyle(defaultButtonStyle);
                 }

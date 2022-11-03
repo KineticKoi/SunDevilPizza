@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class SunDevilPizza extends Application { //Launches the main application
+    public static final String relativePath = "/resources/";
     static final int width = 1920, height = 1080; //Initializes the width and height for the app window
     private static List<Parent> rootNodes = new ArrayList<>();
     private static int currentRootIndex = -1;
@@ -34,8 +35,7 @@ public class SunDevilPizza extends Application { //Launches the main application
         }
         stage.setFullScreen(true); //Sets app to fullscreen
         stage.show(); //Shows the window
-        
-        if (developerMode) {
+        if (developerMode) { //Developer testing window
             final Stage devConsole = new Stage();
             try {
                 Image icon = new Image("file:favicon.png");
@@ -75,6 +75,7 @@ public class SunDevilPizza extends Application { //Launches the main application
         }   
     }
     
+    //Sets Root to next node
     public static boolean nextRoot() {
         if (rootNodes.size() > currentRootIndex + 1) {
             scene.setRoot(rootNodes.get(currentRootIndex + 1));
@@ -84,6 +85,7 @@ public class SunDevilPizza extends Application { //Launches the main application
         return false;
     }
     
+    //Returns app to welcome screen
     public static void home() {
         for (int i = rootNodes.size() - 1; i > 0; i--) {
             rootNodes.remove(i);

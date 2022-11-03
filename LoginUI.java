@@ -86,7 +86,7 @@ public class LoginUI extends Pane {
         backButton.setOnAction(new LoginControlsHandler());
         
         //USER ALREADY SIGNED IN
-        if (SunDevilPizza.session.getUser() != null) {
+        if (SunDevilPizza.session.getUser() != null && ((Customer)SunDevilPizza.session.getUser()).getIDNum() != 0) {
             headerLabel.setVisible(false);
             userNameField.setVisible(false);
             passwordField.setVisible(false);
@@ -105,9 +105,13 @@ public class LoginUI extends Pane {
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick(); //Plays button click sound
             if (event.getSource() == signInButton) { //Sign-in button actions...
-                if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("CustomerVerified")) {
-                    SunDevilPizza.session.setUser(new Customer(Integer.valueOf(userNameField.getText())));
-                    SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));
+                Customer customerObject = FileManager.loadCustomer(Integer.valueOf(userNameField.getText()));
+                if (customerObject != null) {
+                    SunDevilPizza.session.setUser(customerObject);
+                    if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("CustomerVerified")) {
+                        SunDevilPizza.session.setUser(new Customer(Integer.valueOf(userNameField.getText())));
+                        SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));
+                    }
                 }
                 else if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
                     SunDevilPizza.session.setUser(new Employee());

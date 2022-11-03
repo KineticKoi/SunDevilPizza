@@ -1,22 +1,31 @@
 
 public class CredentialVerification {
-    private static final String[] dummyASURITECredentials = new String[] {"7000", "customer"};
     private static final String[] dummyAdminCredentials = new String[] {"employee", "employee"};
     
-    public static String loginCheck(String loginType, String userName, String password) {
+    public static Customer loginCheck(String loginType, String userName, String password) {
         if (loginType.equalsIgnoreCase("employee") && userName.equals(dummyAdminCredentials[0]) && password.equals(dummyAdminCredentials[1])) {
-            return "AdminVerified";
+            return null;
         }
-        if (loginType.equalsIgnoreCase("asurite") && userName.equals(dummyASURITECredentials[0]) && password.equals(dummyASURITECredentials[1])) {
-            return "CustomerVerified";
+        if (loginType.equalsIgnoreCase("asurite")) {
+            Customer customerSave = FileManager.loadCustomer(Integer.valueOf(userName));
+            if (customerSave != null) {
+                if (Integer.parseInt(userName) == customerSave.getIDNum() && password.equals(customerSave.getPassword())) {
+                    return customerSave;
+                }
+            }
         }
-        return "Denied";
+        return null;
     }
     
-    private static boolean isAnInteger(String stringToCheck) { 
+    public static boolean isAnAsuriteID(String stringToCheck) { 
         try { 
-            Integer.parseInt(stringToCheck); 
-            return true; 
+            Integer.parseInt(stringToCheck);
+            if (stringToCheck.length() == 9) {
+                return true; 
+            }
+            else {
+                return false;
+            }
         } 
         catch (NumberFormatException e) {  
             return false; 

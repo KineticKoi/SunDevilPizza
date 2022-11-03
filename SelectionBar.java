@@ -26,8 +26,8 @@ public class SelectionBar extends Pane {
         for (int i = 0; i < numOfButtons; i++) {
             buttonList.add(new Button());
             buttonList.get(i).setText(buttonText[i]);
-            buttonList.get(i).setPrefSize(40, 20);
-            buttonList.get(i).relocate(360 + ((i + 1) * 50), 5);
+            buttonList.get(i).setPrefSize(80, 20);
+            buttonList.get(i).relocate(200 + ((i + 1) * 100), 5);
             buttonList.get(i).setStyle(defaultButtonStyle);
             buttonList.get(i).setOnAction(new ControlsHandler());
             getChildren().add(buttonList.get(i));
@@ -39,18 +39,29 @@ public class SelectionBar extends Pane {
         @Override
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick(); //Plays button click sound
-            if (selectionType.equals("topping")) {
-                if (currentSelection == (Button)event.getSource()) {
-                    currentSelection.setStyle(defaultButtonStyle);
-                    currentSelection = null;
+            if (currentSelection == (Button)event.getSource()) {
+                currentSelection.setStyle(defaultButtonStyle);
+                if (selectionType.equals("topping")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().removeTopping(optionLabel.getText());
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
                 }
-                else {
-                    currentSelection = (Button)event.getSource();
-                    for (int i = 0; i < buttonList.size(); i++) {
-                        buttonList.get(i).setStyle(defaultButtonStyle);
-                    }
-                    currentSelection.setStyle("-fx-text-fill: black; -fx-background-color: #90ee90");
+                currentSelection = null;
+            }
+            else {
+                currentSelection = (Button)event.getSource();
+                if (selectionType.equals("topping")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().removeTopping(optionLabel.getText());
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().addTopping(optionLabel.getText() + " (" + ((Button)event.getSource()).getText() + ")");
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();                       
                 }
+                if (selectionType.equals("time")) {
+                    ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().setPickupTime(((Button)event.getSource()).getText());
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
+                }
+                for (int i = 0; i < buttonList.size(); i++) {
+                    buttonList.get(i).setStyle(defaultButtonStyle);
+                }
+                currentSelection.setStyle("-fx-text-fill: black; -fx-background-color: #90ee90");
             }
         }
     }

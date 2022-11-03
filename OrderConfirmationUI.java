@@ -13,7 +13,7 @@ public class OrderConfirmationUI extends Pane {
     private Button confirmationButton;
     
     //Constructor
-    OrderConfirmationUI(int width, int height) {
+    OrderConfirmationUI(int width, int height, String orderNumber) {
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
@@ -21,7 +21,7 @@ public class OrderConfirmationUI extends Pane {
         headerLabel.layoutXProperty().bind(this.widthProperty().subtract(headerLabel.widthProperty()).divide(2));
         headerLabel.setLayoutY(360);
         headerLabel.setFont(new Font("Arial", 40));
-        subLabel = new Label ("Order confirmation #" + SunDevilPizza.session.generateOrderNumber());
+        subLabel = new Label ("Order confirmation #" + orderNumber);
         subLabel.layoutXProperty().bind(this.widthProperty().subtract(subLabel.widthProperty()).divide(2));
         subLabel.setLayoutY(420);
         subLabel.setFont(new Font("Arial", 24));
