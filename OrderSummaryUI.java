@@ -129,7 +129,7 @@ public class OrderSummaryUI extends Pane {
             }
             if(event.getSource() == purchaseButton) {
                 boolean exists = FileManager.existingCustomer(asuriteIDField.getText() + ".dat");
-                if (!asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && !emailField.getText().equals("")) {
+                if (!asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && emailField.getText().contains("@") && emailField.getText().contains(".")) {
                     if (exists) {
                         SunDevilPizza.session.setUser(CredentialVerification.loginCheck("asurite", asuriteIDField.getText(), passwordField.getText()));
                     }
