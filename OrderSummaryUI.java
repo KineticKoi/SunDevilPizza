@@ -116,12 +116,14 @@ public class OrderSummaryUI extends Pane {
                     verifyButton.setVisible(false);
                     passwordField.setPromptText("Enter your password");
                     passwordField.setVisible(true);
+                    completePurchaseLabel.setStyle("-fx-text-fill: black;");
                 }
                 else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText())){
                     ((Customer)SunDevilPizza.session.getUser()).setIDNum(Integer.parseInt(asuriteIDField.getText()));
                     verifyButton.setVisible(false);
                     passwordField.setPromptText("Create a new password");
                     passwordField.setVisible(true);
+                    completePurchaseLabel.setStyle("-fx-text-fill: black;");
                 }
                 else {
                     completePurchaseLabel.setStyle("-fx-text-fill: red;");
