@@ -125,8 +125,15 @@ public class PizzaBuilderUI extends Pane {
             else if (event.getSource() == forwardButton) {     
                 Pizza currentPizza = ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza();
                 if (currentPizza.getSize() != null && currentPizza.getType() != null) {
-                    if (SunDevilPizza.nextRoot() == false) {
-                        SunDevilPizza.newRoot(new OrderSummaryUI(SunDevilPizza.width, SunDevilPizza.height, orderSummaryTextField.getText()));
+                    timeSelectionLabel.setStyle("-fx-text-fill: black;");
+                    if (timePicker.getValue() != null) {
+                        timeSelectionLabel.setStyle("-fx-text-fill: black;");
+                        if (SunDevilPizza.nextRoot() == false) {
+                            SunDevilPizza.newRoot(new OrderSummaryUI(SunDevilPizza.width, SunDevilPizza.height, orderSummaryTextField.getText()));
+                        }
+                    }
+                    else {
+                        timeSelectionLabel.setStyle("-fx-text-fill: red;");
                     }
                 }
                 else {

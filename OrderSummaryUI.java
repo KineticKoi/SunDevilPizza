@@ -89,14 +89,12 @@ public class OrderSummaryUI extends Pane {
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new OrderSummaryControlsHandler());
         
-        if (((Customer)SunDevilPizza.session.getUser()).getIDNum() != null) {
-            if (SunDevilPizza.session.getUser().getType().equalsIgnoreCase("CUSTOMER")) {
+        if (!((Customer)SunDevilPizza.session.getUser()).getIDNum().equals("-1")) {
                 asuriteIDField.setVisible(false);
                 verifyButton.setVisible(false);
                 Customer customer = (Customer)SunDevilPizza.session.getUser();
                 signedInAsLabel.setText("Signed in as ASURITE ID: " + customer.getIDNum());
                 signedInAsLabel.setVisible(true);
-            }
         }
         
         getChildren().addAll(orderSummaryLabel, orderSummaryTextField, completePurchaseLabel, asuriteIDField, signedInAsLabel, verifyButton, passwordField, emailField, purchaseButton, backButton);  
@@ -119,7 +117,7 @@ public class OrderSummaryUI extends Pane {
                     completePurchaseLabel.setStyle("-fx-text-fill: black;");
                 }
                 else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText())){
-                    ((Customer)SunDevilPizza.session.getUser()).setIDNum(asuriteIDField.getText());
+                    SunDevilPizza.session.setUser(new Customer(asuriteIDField.getText()));
                     verifyButton.setVisible(false);
                     passwordField.setPromptText("Create a new password");
                     passwordField.setVisible(true);
@@ -131,11 +129,11 @@ public class OrderSummaryUI extends Pane {
             }
             if(event.getSource() == purchaseButton) {
                 boolean exists = FileManager.existingCustomer(asuriteIDField.getText());
-                if (!asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && emailField.getText().contains("@") && emailField.getText().contains(".")) {
+                if (!((Customer)SunDevilPizza.session.getUser()).getIDNum().equals("-1") || !asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && emailField.getText().contains("@") && emailField.getText().contains(".")) {
                     if (exists) {
                         SunDevilPizza.session.setUser(CredentialVerification.customerLoginCheck("asurite", asuriteIDField.getText(), passwordField.getText()));
                     }
-                    else {
+                    else if (!passwordField.getText().equals("")){
                         ((Customer)SunDevilPizza.session.getUser()).setPassword(passwordField.getText());
                     }
                     Customer customer = ((Customer)SunDevilPizza.session.getUser());

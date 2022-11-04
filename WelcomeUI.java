@@ -45,7 +45,7 @@ public class WelcomeUI extends Pane {
             else if (event.getSource() == startButton) {
                 SunDevilPizza.newRoot(new PizzaBuilderUI(SunDevilPizza.width, SunDevilPizza.height));
                 if (SunDevilPizza.session.getUser() == null) {
-                    SunDevilPizza.session.setUser(new Customer(null));
+                    SunDevilPizza.session.setUser(new Customer("-1"));
                     SunDevilPizza.session.getUser().setType("customer");
                 }
             }

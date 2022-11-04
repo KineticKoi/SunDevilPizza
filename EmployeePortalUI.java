@@ -48,9 +48,11 @@ public class EmployeePortalUI extends Pane{
             for (int i = 0; i < customer.getOrderHistory().size(); i++) {
                 if (type.equals("Order Processing Agent") && customer.getOrderHistory().get(i).getStatus().equalsIgnoreCase("ACCEPTED")) {
                     queue.add(customer);
+                    break;
                 }
                 else if (type.equalsIgnoreCase("Chef") && customer.getOrderHistory().get(i).getStatus().equals("READY TO COOK") || customer.getOrderHistory().get(i).getStatus().equals("COOKING")) {
                     queue.add(customer);
+                    break;
                 }
             } 
         }

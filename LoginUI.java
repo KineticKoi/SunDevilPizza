@@ -86,7 +86,7 @@ public class LoginUI extends Pane {
         backButton.setOnAction(new LoginControlsHandler());
         
         //USER ALREADY SIGNED IN
-        if (SunDevilPizza.session.getUser() != null && ((Customer)SunDevilPizza.session.getUser()).getIDNum() != null) {
+        if (SunDevilPizza.session.getUser() != null && !((Customer)SunDevilPizza.session.getUser()).getIDNum().equals("-1")) {
             headerLabel.setVisible(false);
             userNameField.setVisible(false);
             passwordField.setVisible(false);
