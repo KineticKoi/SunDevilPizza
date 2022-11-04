@@ -7,9 +7,9 @@ import javax.sound.sampled.Clip;
 public class Sounds {
     
     //Takes a filepath parameter and plays that sound...
-    public static void playSound(String filepath) {
+    public static void playSound(String file) {
         try {
-            File musicPath = new File(filepath); //Gets sound file
+            File musicPath = new File(SunDevilPizza.resourcesPath + file); //Gets sound file
             if (musicPath.exists()) { //If sound file exists...
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 Clip clip = AudioSystem.getClip();
@@ -25,7 +25,7 @@ public class Sounds {
     //Plays button click
     public static void playButtonClick() {
         try {
-            File musicPath = new File("click.wav"); //Gets sound file
+            File musicPath = new File(SunDevilPizza.resourcesPath + "click.wav"); //Gets sound file
             if (musicPath.exists()) { //If sound file exists...
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 Clip clip = AudioSystem.getClip();

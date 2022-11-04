@@ -8,7 +8,7 @@ public class Order implements Serializable {
     
     //Declaring Variables...
     private Pizza pizza;
-    private int status;
+    private String status;
     private String orderNumber;
     private String pickupTime;
     private double orderTotal;
@@ -30,6 +30,18 @@ public class Order implements Serializable {
     
     public String getPickupTime() {
         return pickupTime;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
     
     public String getEmail() {

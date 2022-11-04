@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -6,10 +8,12 @@ import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 public class SunDevilPizza extends Application { //Launches the main application
-    public static final String relativePath = "/resources/";
+    public static final String resourcesPath = "./resources/";
+    public static final String customerFilesPath = "./customerFiles/";
     static final int width = 1920, height = 1080; //Initializes the width and height for the app window
     private static List<Parent> rootNodes = new ArrayList<>();
     private static int currentRootIndex = -1;
@@ -23,22 +27,23 @@ public class SunDevilPizza extends Application { //Launches the main application
         newRoot(scene.getRoot());
         stage.setTitle("SunDevil Pizza"); //Sets the window title
         stage.setScene(scene); //Sets the window scene
-        try { //Custom cursor, icons, and CSS
-            Image icon = new Image("file:sdpLogoIcon.png");
-            Image cursor = new Image("file:cutter.png");
+        //try { //Custom cursor, icons, and CSS
+        try {
+            Image icon = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "sdpLogoIcon.png"));
+            Image cursor = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "cutter.png"));
             stage.getIcons().add(icon);
             scene.setCursor(new ImageCursor(cursor));
-            String styleSheet = getClass().getResource("sdp.css").toExternalForm();
-            scene.getStylesheets().add(styleSheet);
+            scene.getStylesheets().add("sdp.css");
         }
-        catch (Exception e) {    
+        catch (Exception e) {
+            System.out.println(e);
         }
         stage.setFullScreen(true); //Sets app to fullscreen
         stage.show(); //Shows the window
         if (developerMode) { //Developer testing window
             final Stage devConsole = new Stage();
             try {
-                Image icon = new Image("file:favicon.png");
+                Image icon = new Image(resourcesPath + "file:favicon.png");
                 devConsole.getIcons().add(icon);
             } catch (Exception e) {    
             }

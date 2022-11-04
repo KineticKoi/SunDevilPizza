@@ -89,7 +89,7 @@ public class OrderSummaryUI extends Pane {
         backButton = new ButtonMaker("back");
         backButton.setOnAction(new OrderSummaryControlsHandler());
         
-        if (((Customer)SunDevilPizza.session.getUser()).getIDNum() != 0) {
+        if (((Customer)SunDevilPizza.session.getUser()).getIDNum() != null) {
             if (SunDevilPizza.session.getUser().getType().equalsIgnoreCase("CUSTOMER")) {
                 asuriteIDField.setVisible(false);
                 verifyButton.setVisible(false);
@@ -111,7 +111,7 @@ public class OrderSummaryUI extends Pane {
                 SunDevilPizza.previousRoot();
             }
             if (event.getSource() == verifyButton) {
-                boolean exists = FileManager.existingCustomer(asuriteIDField.getText() + ".dat");
+                boolean exists = FileManager.existingCustomer(asuriteIDField.getText());
                 if (exists == true) {
                     verifyButton.setVisible(false);
                     passwordField.setPromptText("Enter your password");
@@ -119,7 +119,7 @@ public class OrderSummaryUI extends Pane {
                     completePurchaseLabel.setStyle("-fx-text-fill: black;");
                 }
                 else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText())){
-                    ((Customer)SunDevilPizza.session.getUser()).setIDNum(Integer.parseInt(asuriteIDField.getText()));
+                    ((Customer)SunDevilPizza.session.getUser()).setIDNum(asuriteIDField.getText());
                     verifyButton.setVisible(false);
                     passwordField.setPromptText("Create a new password");
                     passwordField.setVisible(true);
@@ -130,10 +130,10 @@ public class OrderSummaryUI extends Pane {
                 }
             }
             if(event.getSource() == purchaseButton) {
-                boolean exists = FileManager.existingCustomer(asuriteIDField.getText() + ".dat");
+                boolean exists = FileManager.existingCustomer(asuriteIDField.getText());
                 if (!asuriteIDField.getText().equals("") && !passwordField.getText().equals("") && emailField.getText().contains("@") && emailField.getText().contains(".")) {
                     if (exists) {
-                        SunDevilPizza.session.setUser(CredentialVerification.loginCheck("asurite", asuriteIDField.getText(), passwordField.getText()));
+                        SunDevilPizza.session.setUser(CredentialVerification.customerLoginCheck("asurite", asuriteIDField.getText(), passwordField.getText()));
                     }
                     else {
                         ((Customer)SunDevilPizza.session.getUser()).setPassword(passwordField.getText());
@@ -142,9 +142,10 @@ public class OrderSummaryUI extends Pane {
                     customer.getCurrentOrder().setEmail(emailField.getText());
                     String orderNumber = SunDevilPizza.session.generateOrderNumber();
                     customer.getCurrentOrder().setOrderNumber(orderNumber);
+                    customer.getCurrentOrder().setStatus("ACCEPTED");
                     customer.addOrder(customer.getCurrentOrder());
                     customer.resetCurrentOrder();
-                    FileManager.saveCurrentCustomer();
+                    FileManager.saveCustomer(customer);
                     SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width, SunDevilPizza.height, orderNumber));
                 }
                 else {

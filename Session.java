@@ -20,7 +20,7 @@ public class Session {
     public UUID getSessionID() {
         return sessionID;
     }
-    
+
     public String generateOrderNumber() {
         Random rand = new Random();
         int num = rand.nextInt(999999);

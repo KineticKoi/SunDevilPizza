@@ -17,7 +17,7 @@ public class WelcomeUI extends Pane {
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
         try {
-            Image logoImage = new Image(new FileInputStream("sdpLogo.png"));
+            Image logoImage = new Image(new FileInputStream("./resources/sdpLogo.png"));
             mainLogoBanner = new ImageView();
             mainLogoBanner.setImage(logoImage);
             mainLogoBanner.setFitWidth(logoImage.getWidth());
@@ -45,7 +45,7 @@ public class WelcomeUI extends Pane {
             else if (event.getSource() == startButton) {
                 SunDevilPizza.newRoot(new PizzaBuilderUI(SunDevilPizza.width, SunDevilPizza.height));
                 if (SunDevilPizza.session.getUser() == null) {
-                    SunDevilPizza.session.setUser(new Customer(0));
+                    SunDevilPizza.session.setUser(new Customer(null));
                     SunDevilPizza.session.getUser().setType("customer");
                 }
             }

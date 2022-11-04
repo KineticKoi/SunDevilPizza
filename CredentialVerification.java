@@ -1,17 +1,24 @@
-
 public class CredentialVerification {
-    private static final String[] dummyAdminCredentials = new String[] {"employee", "employee"};
+    private static final String[] dummyOPACredentials = new String[] {"opa", "opa"};
+    private static final String[] dummyChefCredentials = new String[] {"chef", "chef"};
     
-    public static Customer loginCheck(String loginType, String userName, String password) {
-        if (loginType.equalsIgnoreCase("employee") && userName.equals(dummyAdminCredentials[0]) && password.equals(dummyAdminCredentials[1])) {
-            return null;
+    public static Customer customerLoginCheck(String loginType, String userName, String password) {
+        Customer customerSave = FileManager.loadCustomer(userName);
+        if (customerSave != null) {
+            if (userName.equals(customerSave.getIDNum()) && password.equals(customerSave.getPassword())) {
+                return customerSave;
+            }
         }
-        if (loginType.equalsIgnoreCase("asurite")) {
-            Customer customerSave = FileManager.loadCustomer(Integer.valueOf(userName));
-            if (customerSave != null) {
-                if (Integer.parseInt(userName) == customerSave.getIDNum() && password.equals(customerSave.getPassword())) {
-                    return customerSave;
-                }
+        return null;
+    }
+    
+    public static Employee employeeLoginCheck(String loginType, String userName, String password) {
+        if (loginType.equalsIgnoreCase("employee")) {
+            if (userName.equals(dummyOPACredentials[0]) && password.equals(dummyOPACredentials[1])) {
+                return new Employee("OPA");
+            }
+            else if (userName.equals(dummyChefCredentials[0]) && password.equals(dummyChefCredentials[1])) {
+                return new Employee("CHEF");   
             }
         }
         return null;

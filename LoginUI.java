@@ -86,7 +86,7 @@ public class LoginUI extends Pane {
         backButton.setOnAction(new LoginControlsHandler());
         
         //USER ALREADY SIGNED IN
-        if (SunDevilPizza.session.getUser() != null && ((Customer)SunDevilPizza.session.getUser()).getIDNum() != 0) {
+        if (SunDevilPizza.session.getUser() != null && ((Customer)SunDevilPizza.session.getUser()).getIDNum() != null) {
             headerLabel.setVisible(false);
             userNameField.setVisible(false);
             passwordField.setVisible(false);
@@ -105,20 +105,30 @@ public class LoginUI extends Pane {
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick(); //Plays button click sound
             if (event.getSource() == signInButton) { //Sign-in button actions...
-                Customer customerObject = FileManager.loadCustomer(Integer.valueOf(userNameField.getText()));
-                if (customerObject != null) {
-                    SunDevilPizza.session.setUser(customerObject);
-                    if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("CustomerVerified")) {
-                        SunDevilPizza.session.setUser(new Customer(Integer.valueOf(userNameField.getText())));
+                if (type.equalsIgnoreCase("asurite")) {
+                    Customer customer = CredentialVerification.customerLoginCheck(type, userNameField.getText(), passwordField.getText());
+                    if (customer != null) {
+                        SunDevilPizza.session.setUser(customer);
                         SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));
                     }
-                }
-                else if (CredentialVerification.loginCheck(type, userNameField.getText(), passwordField.getText()).equals("AdminVerified")) {
-                    SunDevilPizza.session.setUser(new Employee());
-                    SunDevilPizza.newRoot(new EmployeePortalUI(SunDevilPizza.width, SunDevilPizza.height));
+                    else {
+                            loginFailedLabel.setVisible(true);
+                    }
                 }
                 else {
-                    loginFailedLabel.setVisible(true);
+                    Employee employee = CredentialVerification.employeeLoginCheck(type, userNameField.getText(), passwordField.getText());
+                    if (employee != null) {
+                        SunDevilPizza.session.setUser(employee);
+                        if (((Employee)SunDevilPizza.session.getUser()).getRole().equalsIgnoreCase("OPA")) {
+                            SunDevilPizza.newRoot(new EmployeePortalUI(SunDevilPizza.width, SunDevilPizza.height, "Order Processing Agent"));
+                        }
+                        if (((Employee)SunDevilPizza.session.getUser()).getRole().equalsIgnoreCase("CHEF")) {
+                            SunDevilPizza.newRoot(new EmployeePortalUI(SunDevilPizza.width, SunDevilPizza.height, "Chef"));
+                        }
+                    }
+                    else {
+                        loginFailedLabel.setVisible(true);
+                    }
                 }
             }
             if (event.getSource() == signOutButton) {

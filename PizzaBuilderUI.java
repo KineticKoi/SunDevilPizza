@@ -96,7 +96,7 @@ public class PizzaBuilderUI extends Pane {
         toppingsBasePane.setPrefWidth(400);
         int toppingsSelectionBarBaseY = 5;
         for (String currentTopping : toppingsList) {
-            SelectionBar bar = new SelectionBar("topping", currentTopping, 3, toppingButtonText);
+            SelectionBar bar = new SelectionBar("topping", currentTopping, 3, toppingButtonText, 280, 60);
             bar.relocate(5, toppingsSelectionBarBaseY);
             toppingsSelectionBarBaseY += 40;
             toppingsBasePane.getChildren().add(bar);

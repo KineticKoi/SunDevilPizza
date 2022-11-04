@@ -11,15 +11,13 @@ import java.io.ObjectOutputStream;
 
 public class FileManager {
 
-    public static void saveCurrentCustomer() {
+    public static void saveCustomer(Customer customer) {
         try {
-            Customer customerToSave = (Customer)SunDevilPizza.session.getUser();
-            FileOutputStream fileout = new FileOutputStream(((Customer)customerToSave).getIDNum() + ".dat");
+            FileOutputStream fileout = new FileOutputStream(SunDevilPizza.customerFilesPath + customer.getIDNum() + ".dat");
             ObjectOutputStream streamOut = new ObjectOutputStream(fileout);
-            streamOut.writeObject(customerToSave);
+            streamOut.writeObject(customer);
             streamOut.close();
             fileout.close();
-            System.out.println("Customer Saved Successfully");
         } catch(NotSerializableException n) {
             System.out.println("Not serializable exception\n");
         } catch(IOException e) {
@@ -27,12 +25,11 @@ public class FileManager {
         }
     }
     
-    public static Customer loadCustomer(int asuriteID) {
+    public static Customer loadCustomer(String asuriteID) {
         try {
-            FileInputStream fileIn = new FileInputStream(String.valueOf(asuriteID) + ".dat");
+            FileInputStream fileIn = new FileInputStream(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Customer customer = (Customer)in.readObject();
-            System.out.println("Customer save found and read");
             return customer;
         } catch(ClassNotFoundException c) {
            System.out.println("Class not found\n");    
@@ -45,11 +42,9 @@ public class FileManager {
         }
         return null;
     }
-    public static boolean existingCustomer(String filepath) {
-        File f = new File(filepath);
-        if (f.exists()) {
-            return true;
-        }
-        return false;
+    
+    public static boolean existingCustomer(String asuriteID) {
+        File f = new File(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
+        return f.exists();
     }
 }
