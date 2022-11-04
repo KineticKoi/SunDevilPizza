@@ -5,7 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
-//
+//Method for building admin portal pane including setting label text
+// and button that takes users back to home page
 public class AdminPortalUI extends Pane{
     //Declaring Variables...
     private Label headerLabel;
