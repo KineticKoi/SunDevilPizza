@@ -30,7 +30,7 @@ public class AdminPortalUI extends Pane{
     private class AdminPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
-            Sounds.playButtonClick(); //Adds a sound when pane is clicked
+            Sounds.playButtonClick(); //Calls sound class to play audio when pane is clicked
             if (event.getSource() == homeButton) {
                 SunDevilPizza.home(); //Takes user to home page if button is clicked
             }
