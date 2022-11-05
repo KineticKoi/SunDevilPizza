@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
+//Class to build Employee portal UI pane
 public class EmployeePortalUI extends Pane{
     //Declaring Variables...
     private Label headerLabel;
@@ -23,17 +24,17 @@ public class EmployeePortalUI extends Pane{
     EmployeePortalUI(int width, int height, String type) {
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
-        setStyle("-fx-background-color: #FFFFFF");
-        this.type = type;
-        homeButton = new ButtonMaker("home");
-        queueSP = new ScrollPane();
-        queueSP.setPrefWidth(800);
-        queueSP.setPrefHeight(200);
-        queueSP.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
-        queueSP.layoutYProperty().set(400);
-        File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles();
-        iterateCustomers(customerFileList);
-        queueSP.setContent(createQueuePane());
+        setStyle("-fx-background-color: #FFFFFF"); //Sets pane background color to white
+        this.type = type; //
+        homeButton = new ButtonMaker("home"); //Creates new button with text "home"
+        queueSP = new ScrollPane(); //Creates new scrollpane
+        queueSP.setPrefWidth(800); //Sets scrollpane width to 800
+        queueSP.setPrefHeight(200); //Sets scrolpane height to 200
+        queueSP.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); 
+        queueSP.layoutYProperty().set(400); //Sets scrollpane Y value to 400
+        File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles(); 
+        iterateCustomers(customerFileList); 
+        queueSP.setContent(createQueuePane()); //Sets scrollpane 
         headerLabel = new Label(type + " Queue:");
         headerLabel.setFont(new Font("Arial", 40));
         headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
@@ -70,8 +71,9 @@ public class EmployeePortalUI extends Pane{
         if (newStatus.equals("READY TO COOK") || newStatus.equals("READY FOR PICKUP")) {
             ((Pane)queueSP.getContent()).getChildren().remove(bar);
         }
-    }
+    } //End of updateQueue method
     
+    //Method creates pane for chef and order processing agents to make changes to pizza order statuses
     private Pane createQueuePane() {
         Pane toppingsBasePane = new Pane();
         toppingsBasePane.setPrefWidth(400);
@@ -94,16 +96,18 @@ public class EmployeePortalUI extends Pane{
             }
         }
         return toppingsBasePane;
-    }
+    } //End of createQueuePane method
     
+    //Event handler for pane's home button and audio for clicking 
     private class AdminPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
-            Sounds.playButtonClick();
+            Sounds.playButtonClick(); //
             if (event.getSource() == homeButton) {
                 SunDevilPizza.session.setUser(null);
-                SunDevilPizza.home();
+                SunDevilPizza.home(); //Takes user back to main landing page when home button is clicked
             }
         }
     }
-}
+    
+} //End of EmployeePortalUI class
