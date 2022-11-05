@@ -26,14 +26,15 @@ public class AdminPortalUI extends Pane{
         getChildren().addAll(headerLabel, homeButton); //Adding home button and label to pane
     }
     
-    //Event handler
+    //Event handler for pane's home button and audio for clicking
     private class AdminPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick(); //Calls sound class to play audio when pane is clicked
             if (event.getSource() == homeButton) {
-                SunDevilPizza.home(); //Takes user to home page if button is clicked
+                SunDevilPizza.home(); //Takes user back to main landing page when home button is clicked
             }
         }
     }
-}
+    
+} //End of AdminPortalUI class
