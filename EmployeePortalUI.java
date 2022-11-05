@@ -35,14 +35,15 @@ public class EmployeePortalUI extends Pane{
         File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles(); 
         iterateCustomers(customerFileList); 
         queueSP.setContent(createQueuePane()); //Sets scrollpane 
-        headerLabel = new Label(type + " Queue:");
-        headerLabel.setFont(new Font("Arial", 40));
+        headerLabel = new Label(type + " Queue:"); //Sets label's text to "Queue"
+        headerLabel.setFont(new Font("Arial", 40)); //Sets label's font and text size
         headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
-        headerLabel.layoutYProperty().set(320);
-        homeButton.setOnAction(new AdminPortalControlsHandler());
-        getChildren().addAll(headerLabel, homeButton, queueSP);
+        headerLabel.layoutYProperty().set(320); //Sets pane's Y value to 320 
+        homeButton.setOnAction(new AdminPortalControlsHandler()); //Setting up eventhandler for pane's buttons
+        getChildren().addAll(headerLabel, homeButton, queueSP); //Adding label, home button, and queue pane to main pane 
     }
     
+    //Method iterates through orders in queue to check whether order processing agents or chefs can interact with them
     public void iterateCustomers(File[] files) {
         for (File file : files) {
             Customer customer = FileManager.loadCustomer(file.getName().split("[.]")[0]);
@@ -59,27 +60,28 @@ public class EmployeePortalUI extends Pane{
         }
     }
     
+    //Method for employees to update order queue status
     public void updateQueue(String orderNumber, String newStatus, SelectionBar bar) {
-        for(Customer customer : queue) {
-            for(Order order : customer.getOrderHistory()) {
-                if (order.getOrderNumber().equals(orderNumber)) {    
-                    order.setStatus(newStatus);
+        for(Customer customer : queue) { //Loops for however many customers have orders in queue
+            for(Order order : customer.getOrderHistory()) { //Loops for each customer's order history
+                if (order.getOrderNumber().equals(orderNumber)) { //Checks if the customer's order number is the same as order that is currently being processed
+                    order.setStatus(newStatus); //Updates order status to pizza's current status 
                 }
             }
-            FileManager.saveCustomer(customer);
+            FileManager.saveCustomer(customer); //Saves customer's order information to system
         }
-        if (newStatus.equals("READY TO COOK") || newStatus.equals("READY FOR PICKUP")) {
-            ((Pane)queueSP.getContent()).getChildren().remove(bar);
+        if (newStatus.equals("READY TO COOK") || newStatus.equals("READY FOR PICKUP")) { //Checking if order is just coming in or if it is ready to be removed from queue
+            ((Pane)queueSP.getContent()).getChildren().remove(bar); 
         }
     } //End of updateQueue method
     
     //Method creates pane for chef and order processing agents to make changes to pizza order statuses
     private Pane createQueuePane() {
-        Pane toppingsBasePane = new Pane();
-        toppingsBasePane.setPrefWidth(400);
-        int toppingsSelectionBarBaseY = 5;
-        for(Customer customer : queue) {
-            for(Order order : customer.getOrderHistory()) {
+        Pane toppingsBasePane = new Pane(); //Creates new pane 
+        toppingsBasePane.setPrefWidth(400); //Sets created pane's preferred width to 400
+        int toppingsSelectionBarBaseY = 5; 
+        for(Customer customer : queue) { //Looping for customer orders in queue
+            for(Order order : customer.getOrderHistory()) { //Looping for each customer's order history
                 SelectionBar bar;
                 if (type.equalsIgnoreCase("Order Processing Agent") && order.getStatus().equalsIgnoreCase("ACCEPTED")) {
                     bar = new SelectionBar("status", order.getOrderNumber(), 1, opaButtonText, 400, 140);
@@ -102,12 +104,12 @@ public class EmployeePortalUI extends Pane{
     private class AdminPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
-            Sounds.playButtonClick(); //
-            if (event.getSource() == homeButton) {
-                SunDevilPizza.session.setUser(null);
+            Sounds.playButtonClick(); //Calls sound class to play audio when pane is clicked
+            if (event.getSource() == homeButton) { //Checks if home button is clicked
+                SunDevilPizza.session.setUser(null); //Sets current session to null, logging out admin user
                 SunDevilPizza.home(); //Takes user back to main landing page when home button is clicked
             }
         }
-    }
+    } //End of AdminPortalControlsHandler event handler class
     
 } //End of EmployeePortalUI class
