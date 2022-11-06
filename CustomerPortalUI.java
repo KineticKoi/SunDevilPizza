@@ -18,8 +18,8 @@ public class CustomerPortalUI extends Pane{
         setStyle("-fx-background-color: #FFFFFF"); //Sets background to be white
         headerLabel = new Label("CUSTOMER PORTAL (UNDER CONSTRUCTION):"); //Sets pane label text
         headerLabel.setFont(new Font("Arial", 40)); //Sets label text font and size
-        headerLabel.layoutXProperty().set(40); //Sets pane's X value
-        headerLabel.layoutYProperty().set(40); //Sets pane's Y value
+        headerLabel.layoutXProperty().set(40); //Sets pane's centering X value
+        headerLabel.layoutYProperty().set(40); //Sets pane's centering Y value
         homeButton = new ButtonMaker("home"); //Creates new button with "home" text 
         homeButton.setOnAction(new CustomerPortalControlsHandler()); //Sets up pane's button handler
         getChildren().addAll(headerLabel, homeButton); //Adds label and home button to pane
