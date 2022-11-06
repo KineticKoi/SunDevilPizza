@@ -25,40 +25,43 @@ public class EmployeePortalUI extends Pane{
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF"); //Sets pane background color to white
-        this.type = type; //
+        this.type = type; //Sets current employee type to type in constructor parameters
         homeButton = new ButtonMaker("home"); //Creates new button with text "home"
         queueSP = new ScrollPane(); //Creates new scrollpane
         queueSP.setPrefWidth(800); //Sets scrollpane width to 800
         queueSP.setPrefHeight(200); //Sets scrolpane height to 200
-        queueSP.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); 
-        queueSP.layoutYProperty().set(400); //Sets scrollpane Y value to 400
-        File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles(); 
-        iterateCustomers(customerFileList); 
-        queueSP.setContent(createQueuePane()); //Sets scrollpane 
+        queueSP.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); //Sets scrollpane centering X value 
+        queueSP.layoutYProperty().set(400); //Sets scrollpane centering Y value
+        File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles(); //Creates a new file array for the file path to customer records file 
+        iterateCustomers(customerFileList); //Makes a method call to iterateCustomers and passes in the newly created customerFileList object
+        queueSP.setContent(createQueuePane()); //Sets scrollpane content by making a method call to create a new queuepane 
         headerLabel = new Label(type + " Queue:"); //Sets label's text to "Queue"
         headerLabel.setFont(new Font("Arial", 40)); //Sets label's font and text size
-        headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
-        headerLabel.layoutYProperty().set(320); //Sets pane's Y value to 320 
+        headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); //Sets label's centering X value
+        headerLabel.layoutYProperty().set(320); //Sets label's centering Y value 
         homeButton.setOnAction(new AdminPortalControlsHandler()); //Setting up eventhandler for pane's buttons
         getChildren().addAll(headerLabel, homeButton, queueSP); //Adding label, home button, and queue pane to main pane 
     }
     
-    //Method iterates through orders in queue to check whether order processing agents or chefs can interact with them
+    //Method iterates through customer order records to check whether for which orders have finished being processed and which
+    // need to be added to the queue so order processing agents and chefs can interact with them to update pizza statuses
     public void iterateCustomers(File[] files) {
-        for (File file : files) {
-            Customer customer = FileManager.loadCustomer(file.getName().split("[.]")[0]);
-            for (int i = 0; i < customer.getOrderHistory().size(); i++) {
-                //
+        for (File file : files) {/ //Looping for amount of customer orders in records
+            Customer customer = FileManager.loadCustomer(file.getName().split("[.]")[0]); //Creating new 
+            for (int i = 0; i < customer.getOrderHistory().size(); i++) { //Looping through each customer's order history to verify what stage their past orders are in 
                 if (type.equals("Order Processing Agent") && customer.getOrderHistory().get(i).getStatus().equalsIgnoreCase("ACCEPTED")) {
-                    queue.add(customer);
-                    break;
+                    //Checks if current employee type is the "Order Processing Agent" and checks if the status of the current indexed order status is set to "Accepted"
+                    queue.add(customer); //Adds customer to current queue
+                    break; //Breaks to continue iterating through customer order records
                 } 
                 else if (type.equalsIgnoreCase("Chef") && customer.getOrderHistory().get(i).getStatus().equals("READY TO COOK") || customer.getOrderHistory().get(i).getStatus().equals("COOKING")) {
-                    queue.add(customer); //
-                    break;
+                    //Checks if current employee type is the "Chef" and checks if the status of the current indexed
+                    //  order status is set to "Ready to cook" or "Cooking"
+                    queue.add(customer); //Adds customer to current queue
+                    break; //Breaks to continue iterating through customer order records
                 }
-            } 
-        }
+            }
+        } 
     } //End of iterateCustomers method
     
     //Method for employees to update order queue status
@@ -79,26 +82,26 @@ public class EmployeePortalUI extends Pane{
     //Method creates pane for chef and order processing agents to make changes to pizza order statuses
     private Pane createQueuePane() {
         Pane toppingsBasePane = new Pane(); //Creates new pane 
-        toppingsBasePane.setPrefWidth(400); //Sets created pane's preferred width to 400
+        toppingsBasePane.setPrefWidth(400); //Sets pane's preferred width to 400
         int toppingsSelectionBarBaseY = 5; 
         for(Customer customer : queue) { //Looping for customer orders in queue
             for(Order order : customer.getOrderHistory()) { //Looping for each customer's order history
                 SelectionBar bar;
-                if (type.equalsIgnoreCase("Order Processing Agent") && order.getStatus().equalsIgnoreCase("ACCEPTED")) {
+                if (type.equalsIgnoreCase("Order Processing Agent") && order.getStatus().equalsIgnoreCase("ACCEPTED")) { //Checking if 
                     bar = new SelectionBar("status", order.getOrderNumber(), 1, opaButtonText, 400, 140);
-                    bar.relocate(5, toppingsSelectionBarBaseY);
+                    bar.relocate(5, toppingsSelectionBarBaseY); //Relocates selection bar to (5, toppingsSelectionBarBaseY) 
                     toppingsSelectionBarBaseY += 40;
-                    toppingsBasePane.getChildren().add(bar);
+                    toppingsBasePane.getChildren().add(bar); //Adding new selection bar to base pane
                 }
-                else if (type.equalsIgnoreCase("Chef") && order.getStatus().equalsIgnoreCase("READY TO COOK")) {
+                else if (type.equalsIgnoreCase("Chef") && order.getStatus().equalsIgnoreCase("READY TO COOK")) { //Checking if 
                     bar = new SelectionBar("status", order.getOrderNumber(), 2, chefButtonText, 120, 140);
-                    bar.relocate(5, toppingsSelectionBarBaseY);
+                    bar.relocate(5, toppingsSelectionBarBaseY); //Relocates selection bar to (5, toppingsSelectionBarBaseY)
                     toppingsSelectionBarBaseY += 40;
-                    toppingsBasePane.getChildren().add(bar);
+                    toppingsBasePane.getChildren().add(bar); //Adding new selection bar to base pane
                 }
             }
         }
-        return toppingsBasePane;
+        return toppingsBasePane; //Returning newly created pane to EmployeePortalUI main pane
     } //End of createQueuePane method
     
     //Event handler for pane's home button and audio for clicking 
