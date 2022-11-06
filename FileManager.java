@@ -8,23 +8,25 @@ import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-
+//Class 
 public class FileManager {
 
+    //Method 
     public static void saveCustomer(Customer customer) {
         try {
-            FileOutputStream fileout = new FileOutputStream(SunDevilPizza.customerFilesPath + customer.getIDNum() + ".dat");
-            ObjectOutputStream streamOut = new ObjectOutputStream(fileout);
-            streamOut.writeObject(customer);
-            streamOut.close();
-            fileout.close();
+            FileOutputStream fileout = new FileOutputStream(SunDevilPizza.customerFilesPath + customer.getIDNum() + ".dat"); //
+            ObjectOutputStream streamOut = new ObjectOutputStream(fileout); //
+            streamOut.writeObject(customer); //Writing object to out file stream
+            streamOut.close(); //Closing out file stream
+            fileout.close(); //Closing out file
         } catch(NotSerializableException n) {
-            System.out.println("Not serializable exception\n");
+            System.out.println("Not serializable exception\n"); 
         } catch(IOException e) {
             System.out.println("Data file read exception\n");
         }
     }
     
+    //Method 
     public static Customer loadCustomer(String asuriteID) {
         try {
             FileInputStream fileIn = new FileInputStream(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
@@ -43,8 +45,11 @@ public class FileManager {
         return null;
     }
     
+    //Method 
     public static boolean existingCustomer(String asuriteID) {
         File f = new File(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
         return f.exists();
     }
-}
+    
+} //End of FileManager class
+
