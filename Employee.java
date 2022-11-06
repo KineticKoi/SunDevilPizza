@@ -1,15 +1,15 @@
 
-//Employee class with getter and setter methods for employee role
+//Class with getter and setter methods for employee role
 public class Employee extends User {
-    private String role; //role can be either chef or order processing agent
+    private String role; //Role can be either Chef or Order Processing Agent
     
     //Default Constructor
     Employee(String role) {
-        super("EMPLOYEE"); //Super for class User 
-        this.role = role; //Updates employee object's role
+        super("EMPLOYEE");
+        this.role = role; //Updating employee role from string in paratemeter list
     }
     
-    //Getter method for returning employee role 
+    //Getter method for returning employee role
     public String getRole() {
         return role;
     }
