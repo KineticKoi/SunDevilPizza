@@ -1,40 +1,84 @@
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
-//Class builds customer portal UI pane
 public class CustomerPortalUI extends Pane{
     //Declaring Variables...
-    private Label headerLabel;
+    private Label currentOrdersLabel;
+    private Label orderHistoryLabel;
+    private ScrollPane currentOrderSP;
+    private ScrollPane orderHistorySP;
+    private List<Order> currentOrderList = new ArrayList<>();
+    private List<Order> previousOrderList = new ArrayList<>();
     private Button homeButton;
     
     //Constructor
     CustomerPortalUI(int width, int height) {
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
-        setStyle("-fx-background-color: #FFFFFF"); //Sets background to be white
-        headerLabel = new Label("CUSTOMER PORTAL (UNDER CONSTRUCTION):"); //Sets pane label text
-        headerLabel.setFont(new Font("Arial", 40)); //Sets label text font and size
-        headerLabel.layoutXProperty().set(40); //Sets pane's centering X value
-        headerLabel.layoutYProperty().set(40); //Sets pane's centering Y value
-        homeButton = new ButtonMaker("home"); //Creates new button with "home" text 
-        homeButton.setOnAction(new CustomerPortalControlsHandler()); //Sets up pane's button handler
-        getChildren().addAll(headerLabel, homeButton); //Adds label and home button to pane
+        setStyle("-fx-background-color: #FFFFFF");
+        currentOrdersLabel = new Label("Current Orders:");
+        currentOrdersLabel.setFont(new Font("Arial", 40));
+        currentOrdersLabel.relocate(100, 80);
+        iterateOrders();
+        currentOrderSP = new ScrollPane();
+        currentOrderSP.relocate(100, 160);
+        currentOrderSP.setPrefWidth(800);
+        currentOrderSP.setPrefHeight(240);
+        currentOrderSP.setContent(createQueuePane(currentOrderList));
+        orderHistoryLabel = new Label("Previous Orders:");
+        orderHistoryLabel.setFont(new Font("Arial", 40));
+        orderHistoryLabel.relocate(100, 520);
+        orderHistorySP = new ScrollPane();
+        orderHistorySP.relocate(100, 600);
+        orderHistorySP.setPrefWidth(800);
+        orderHistorySP.setPrefHeight(240);
+        orderHistorySP.setContent(createQueuePane(previousOrderList));
+        homeButton = new ButtonMaker("home");
+        homeButton.setOnAction(new CustomerPortalControlsHandler());
+        getChildren().addAll(currentOrdersLabel, currentOrderSP, orderHistoryLabel, orderHistorySP, homeButton);
     }
     
-    //Event handler for pane's home button and audio for clicking
+    public void iterateOrders() {
+        Customer customer = (Customer)SunDevilPizza.session.getUser();
+        for (int i = 0; i < customer.getOrderHistory().size(); i++) {
+            if (!customer.getOrderHistory().get(i).getStatus().equalsIgnoreCase("READY")) {
+                currentOrderList.add(customer.getOrderHistory().get(i));
+            }
+            else {
+               previousOrderList.add(customer.getOrderHistory().get(i));
+            }
+        } 
+    }
+    
+    private Pane createQueuePane(List<Order> orderList) {
+        Pane orderBasePane = new Pane();
+        orderBasePane.setPrefWidth(780);
+        int toppingsSelectionBarBaseY = 5;
+        SelectionBar bar;
+        for (int i = 0; i < orderList.size(); i++) {
+            bar = new SelectionBar(780, "", orderList.get(i).getOrderNumber() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + orderList.get(i).getStatus(), 0, null, 400, 140);
+            bar.relocate(5, toppingsSelectionBarBaseY);
+            toppingsSelectionBarBaseY += 40;
+            orderBasePane.getChildren().add(bar);
+        }
+        return orderBasePane;
+    }
+    
     private class CustomerPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
-            Sounds.playButtonClick(); //Calls sound class to play audio when pane is clicked
-            if (event.getSource() == homeButton) { //Checking if home button is clicked
-                SunDevilPizza.home(); //Takes user back to main landing page when home button is clicked
+            Sounds.playButtonClick();
+            if (event.getSource() == homeButton) {
+                SunDevilPizza.home();
             }
         }
     }
-    
-} //End of CustomerPortalUI class
-
+}
