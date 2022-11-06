@@ -19,8 +19,8 @@ public class Customer extends User implements Serializable {
     
     //Building Customer object from relevant information
     Customer(String asuriteIDNum) {
-        super("CUSTOMER"); 
-        this.asuriteIDNum = asuriteIDNum; //Sets new object's customer ASURITEID number 
+        super("CUSTOMER");
+        this.asuriteIDNum = asuriteIDNum; //Sets new object's customer ASURITEID number
         this.currentOrder = new Order(new Pizza()); //Sets current order using new customized pizza
         this.orderHistory = new ArrayList<>(); //Creates new arrayList for customer object's order history
     }
@@ -45,7 +45,7 @@ public class Customer extends User implements Serializable {
         return currentOrder;
     }
     
-    //Setter method for setting current order's pizza type, toppings, and size from customization 
+    //Setter method for setting current order's pizza type, toppings, and size from customization
     public void resetCurrentOrder() {
         currentOrder = new Order(new Pizza());
     }
@@ -65,4 +65,4 @@ public class Customer extends User implements Serializable {
         return orderHistory;
     }
     
-}//End of Customer class
+} //End of Customer class
