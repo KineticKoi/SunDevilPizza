@@ -32,15 +32,15 @@ public class CredentialVerification {
     public static boolean isAnAsuriteID(String stringToCheck) { 
         try { 
             Integer.parseInt(stringToCheck); //Parsing ASURITEID input to check length
-            if (stringToCheck.length() == 9) { //Checking if parsed ASURITEID is 9 integers long
-                return true; //Returning true if ID is valid
+            if (stringToCheck.length() == 10) { //Checking if parsed ASURITEID is 9 integers long
+                return true; //Returns true if ID is valid
             }
             else {
-                return false; //Returning false if ID is invalid
+                return false; //Returns false if ID is invalid
             }
         } 
         catch (NumberFormatException e) {  
-            return false; //Returning false if ID input was empty or included letters
+            return false; //Returns false if ID input was empty or included letters
         }
     }
     
