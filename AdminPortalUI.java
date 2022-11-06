@@ -19,8 +19,8 @@ public class AdminPortalUI extends Pane{
         setStyle("-fx-background-color: #FFFFFF"); //Sets pane background to white
         headerLabel = new Label("ADMIN PORTAL (UNDER CONSTRUCTION):"); //Sets pane label text
         headerLabel.setFont(new Font("Arial", 40)); //Sets label text font type and size
-        headerLabel.layoutXProperty().set(40); //Sets label X value
-        headerLabel.layoutYProperty().set(40); //Sets label Y value
+        headerLabel.layoutXProperty().set(40); //Centers X value for the pane to 40
+        headerLabel.layoutYProperty().set(40); //Centers Y value for the pane to 40
         homeButton = new ButtonMaker("home"); //Sets button text
         homeButton.setOnAction(new AdminPortalControlsHandler()); //Call to event handler
         getChildren().addAll(headerLabel, homeButton); //Adding home button and label to pane
