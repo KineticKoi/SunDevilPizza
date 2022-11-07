@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,27 +25,29 @@ public class FileManager {
         }
     }
     
-    //Method 
+    //Method for getting Customer object from ASURITE ID
     public static Customer loadCustomer(String asuriteID) {
         try {
+            // Attempt to retrieve Customer object
             FileInputStream fileIn = new FileInputStream(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             Customer customer = (Customer)in.readObject();
             return customer;
-        } catch(ClassNotFoundException c) {
+        } catch(ClassNotFoundException c) {  // Handle class not found exceptions
            System.out.println("Class not found\n");    
-        } catch (FileNotFoundException f) {
+        } catch (FileNotFoundException f) {  // Handle file not found exceptions
             System.out.println("No customer save exists\n");
-        } catch(NotSerializableException n) {
+        } catch(NotSerializableException n) {  // Handle non serializable data
             System.out.println("Not serializable exception\n");
-        } catch(IOException e) {
+        } catch(IOException e) {  // Handle IO exceptions
            System.out.println("Data file read exception\n");
         }
         return null;
     }
     
-    //Method 
+    //Method for checking if a customer already exists
     public static boolean existingCustomer(String asuriteID) {
+        // Get the customer file and return if it exists
         File f = new File(SunDevilPizza.customerFilesPath + asuriteID + ".dat");
         return f.exists();
     }

@@ -1,4 +1,3 @@
-
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,15 +15,18 @@ public class OrderConfirmationUI extends Pane {
     OrderConfirmationUI(int width, int height, String orderNumber) {
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
-        setStyle("-fx-background-color: #FFFFFF");
+        setStyle("-fx-background-color: #FFFFFF");  // Set background color
+        // Configure the header label
         headerLabel = new Label("Your order is complete!");
         headerLabel.layoutXProperty().bind(this.widthProperty().subtract(headerLabel.widthProperty()).divide(2));
         headerLabel.setLayoutY(360);
         headerLabel.setFont(new Font("Arial", 40));
+        // Configure the sub label
         subLabel = new Label ("Order confirmation #" + orderNumber);
         subLabel.layoutXProperty().bind(this.widthProperty().subtract(subLabel.widthProperty()).divide(2));
         subLabel.setLayoutY(420);
         subLabel.setFont(new Font("Arial", 24));
+        // Configure the confirmation button
         confirmationButton = new Button("Order Status");
         confirmationButton.setPrefSize(160, 60);
         confirmationButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
@@ -34,6 +36,7 @@ public class OrderConfirmationUI extends Pane {
         getChildren().addAll(headerLabel, subLabel, confirmationButton);
     }
     
+    // Method for handling order confirmation
     private class OrderConfirmationControlsHandler implements EventHandler<javafx.event.ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
