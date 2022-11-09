@@ -1,21 +1,30 @@
 import java.io.FileInputStream;
 import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 
 public class WelcomeUI extends Pane {
     //Declaring Variables...
     private ImageView mainLogoBanner;
     private Button startButton;
     private Button loginButton;
+    private int clickCount = 0;
+    private Label counter;
     
     //Constructor
     WelcomeUI(int width, int height) {
+        clickCount = 0;
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
+        counter = new Label("");
+        counter.setFont(new Font("Arial", 24));
+        counter.relocate(60, 900);
         try {
             Image logoImage = new Image(new FileInputStream("./resources/sdpLogo.png"));// creates an image object to be used
             mainLogoBanner = new ImageView();// creates a image view object to interact with the pane spaces
@@ -23,6 +32,21 @@ public class WelcomeUI extends Pane {
             mainLogoBanner.setFitWidth(logoImage.getWidth());// fits the width
             mainLogoBanner.layoutXProperty().bind(this.widthProperty().subtract(mainLogoBanner.getFitWidth()).divide(2)); // defines the horozontal properties
             mainLogoBanner.layoutYProperty().set(140);
+            mainLogoBanner.setOnMouseClicked(event ->  { //Balasooriya mode easter egg
+                if (clickCount == 68) {
+                    try {
+                        Image cursor = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "bala.png"));//pulls the pizza cutter image from the resource folder and sets the cursor as the pizza cutter
+                        this.getScene().setCursor(new ImageCursor(cursor)); //initalizes new cursor
+                    }
+                    catch (Exception e) {
+                        System.out.println(e); //if an exception is caught print in the console log
+                    }
+                }
+                if (clickCount < 69) {
+                    clickCount++;
+                }
+                counter.setText(String.valueOf(clickCount));
+            });
         }
         catch(Exception e) {     
         }
@@ -32,7 +56,7 @@ public class WelcomeUI extends Pane {
         startButton.layoutXProperty().bind(this.widthProperty().subtract(startButton.widthProperty()).divide(2));// defines horizontal property dependent on the width of the buttons
         startButton.setLayoutY(560);// defines static height of the button
         startButton.setOnAction(new WelcomePageControlsHandler()); // when start button is clicked trigger new pizza builder UI
-        getChildren().addAll(mainLogoBanner, loginButton, startButton); // initializing the pane
+        getChildren().addAll(mainLogoBanner, loginButton, startButton, counter); // initializing the pane
     }
     
     private class WelcomePageControlsHandler implements EventHandler<javafx.event.ActionEvent> { //control handler for the welcome page
