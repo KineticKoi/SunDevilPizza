@@ -54,7 +54,7 @@ public class EmployeePortalUI extends Pane{
                 if (type.equalsIgnoreCase("Order Processing Agent") && customer.getOrderHistory().get(i).getStatus().equalsIgnoreCase("ACCEPTED")) {
                     queue.add(customer); //Adds customer's order to current queue
                 } 
-                else if (type.equalsIgnoreCase("Chef") && !customer.getOrderHistory().get(i).getStatus().equals("READY")) {
+                else if (type.equalsIgnoreCase("Chef") && customer.getOrderHistory().get(i).getStatus().equals("READY TO COOK") || customer.getOrderHistory().get(i).getStatus().equals("COOKING")) {
                     //Checks if current employee type is the "Chef" and checks if the status of the current indexed
                     //  order status is set to "Ready to cook" or "Cooking" before adding customer order to queue
                     queue.add(customer); //Adds customer's order to current queue 

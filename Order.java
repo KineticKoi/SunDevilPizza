@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 
 
@@ -10,58 +11,57 @@ public class Order implements Serializable {
     private String status;
     private String orderNumber;
     private String pickupTime;
-    private double orderTotal;
     private String emailAddress;
     
-    //Default Constructor
+    //Order default constructor
     Order() {}
     
-    //Constructor for an already existing pizza
+    //Order constructor with a pizza passed in
     Order(Pizza pizza) {
         this.pizza = pizza;
     }
     
-    //Getter for the pizza object
+    //Getter method for pizza
     public Pizza getPizza() {
         return pizza;
     }
     
-    //Setter for pizza pickup time
+    //Setter method for pizza pickup time
     public void setPickupTime(String pickupTime) {
         this.pickupTime = pickupTime;
     }
     
-    //Getter for pizza pickup time
+    //Getter method for pizza pickup time
     public String getPickupTime() {
         return pickupTime;
     }
     
-    //Getter for pizza status
+    //Getter method for pizza status
     public String getStatus() {
         return status;
     }
     
-    //Getter for pizza order number
+    //Getter method for pizza order number
     public String getOrderNumber() {
         return orderNumber;
     }
     
-    //Setter for order status
+    //Setter method for pizza status 
     public void setStatus(String status) {
         this.status = status;
     }
     
-    //Getter for email address
+    //Getter method for customer email
     public String getEmail() {
         return emailAddress;
     }
-
-    //Setter for email address
+    
+    //Setter method for customer email
     public void setEmail(String email) {
         this.emailAddress = email;
     }
     
-    //Setter for order number
+    //Setter method for pizza order number
     public void setOrderNumber(String orderNumber) {
         this.orderNumber = orderNumber;
     }

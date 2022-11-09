@@ -69,7 +69,7 @@ public class CustomerPortalUI extends Pane{
         for (int i = 0; i < orderList.size(); i++) { //Looping for number of order's in a customer's list
             //Creating a new selectionBar to be added to the queue pane being constructed which includes an order's number and status 
             bar = new SelectionBar(780, "", orderList.get(i).getOrderNumber() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + 
-                                   orderList.get(i).getStatus(), 0, null, 400, 140);
+                            orderList.get(i).getStatus(), 0, null, 400, 140);
             bar.relocate(5, toppingsSelectionBarBaseY); //Relocating selectionBar to (5, (current value of toppingsSelectionBarBaseY after arithmetic))
             toppingsSelectionBarBaseY += 40; //Incrementing integer by 40 each loop iteration
             orderBasePane.getChildren().add(bar); //Adding selectionBar to base pane

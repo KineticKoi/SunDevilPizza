@@ -44,4 +44,3 @@ public class CredentialVerification {
         }
     }
 } //End of CredentialVerification class
-

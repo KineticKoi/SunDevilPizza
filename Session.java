@@ -1,40 +1,32 @@
+
 import java.util.Random;
 import java.util.UUID;
 
-//Session class to maintain a single user experience
 public class Session {
-
-    //Declaring Variables...
-    private User user;
-    private final UUID sessionID = UUID.randomUUID();
-    
-    //Default Constructor
+    private User user; //creates a user
+    private final UUID sessionID = UUID.randomUUID(); //creates a random session id
     Session() {
         user = null;
-    }
-    
-    //Getter for the user object
+    } //sets the user as null by default
+
     public User getUser() {
         return user;
-    }
+    } //user getter
     
-    //Setter for the user object
     public void setUser(User user) {
         this.user = user;
-    }
+    } //user setter
     
-    //Getter for the session ID variable
     public UUID getSessionID() {
         return sessionID;
-    }
+    } //session ID getter
 
-    //Random number generator for an order number
-    public String generateOrderNumber() {
+    public String generateOrderNumber() { //generate a unique order number
         Random rand = new Random();
-        int num = rand.nextInt(999999);
-        String orderNumber = String.format("%06d", num);
-        orderNumber = orderNumber.substring(0, 2) + "-" + orderNumber.substring(2);
-        return orderNumber;
+        int num = rand.nextInt(999999); //creating a new random number that will serve as the order number
+        String orderNumber = String.format("%06d", num); //converts the order number to a string filling the blanks with zeros up to 6 digits
+        orderNumber = orderNumber.substring(0, 2) + "-" + orderNumber.substring(2); //creates a delimiter between the zeros and the order number
+        return orderNumber; //returns the order number
     }
 }
 
