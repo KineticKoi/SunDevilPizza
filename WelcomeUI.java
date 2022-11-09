@@ -24,7 +24,7 @@ public class WelcomeUI extends Pane {
         setStyle("-fx-background-color: #FFFFFF");
         counter = new Label("");
         counter.setFont(new Font("Arial", 24));
-        counter.relocate(60, 900);
+        counter.relocate(180, 920);
         try {
             Image logoImage = new Image(new FileInputStream("./resources/sdpLogo.png"));// creates an image object to be used
             mainLogoBanner = new ImageView();// creates a image view object to interact with the pane spaces
