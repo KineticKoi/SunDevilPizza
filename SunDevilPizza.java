@@ -49,7 +49,6 @@ public class SunDevilPizza extends Application { //Launches the main application
         scene.setRoot(node);
         rootNodes.add(scene.getRoot());
         currentRootIndex++;
-
     }
     
     //Sets Root to previous node
