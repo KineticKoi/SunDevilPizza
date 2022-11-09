@@ -14,6 +14,7 @@ public class EmployeePortalUI extends Pane{
     
     //Declaring Variables...
     private Label headerLabel;
+    private Label message;
     private Button homeButton;
     private List<Customer> queue = new ArrayList<>();
     private ScrollPane queueSP;
@@ -40,8 +41,12 @@ public class EmployeePortalUI extends Pane{
         headerLabel.setFont(new Font("Arial", 40)); //Sets label's font and text size
         headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); //Sets label's centering X value
         headerLabel.layoutYProperty().set(320); //Moving scrollPane down slightely
+        message = new Label("");
+        message.setFont(new Font("Arial", 32));
+        message.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
+        message.layoutYProperty().set(640);
         homeButton.setOnAction(new AdminPortalControlsHandler()); //Setting up eventhandler for pane's buttons
-        getChildren().addAll(headerLabel, homeButton, queueSP); //Adding everything to pane
+        getChildren().addAll(headerLabel, homeButton, queueSP, message); //Adding everything to pane
     }
     
     //Method iterates through customer order records to check whether for which orders have finished being processed and which
@@ -76,6 +81,9 @@ public class EmployeePortalUI extends Pane{
         //Checking if order is just coming in or if it is ready to be removed from queue
         if (newStatus.equals("READY TO COOK") || newStatus.equals("READY")) {
             ((Pane)queueSP.getContent()).getChildren().remove(bar); //Updates queue
+            if (newStatus.equals("READY")) { //If the order is ready
+                message.setText("Email sent for order " + orderNumber); //"Sends email"...
+            }
         }
     }
     
