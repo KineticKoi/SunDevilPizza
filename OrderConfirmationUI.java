@@ -1,5 +1,6 @@
 
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -34,9 +35,9 @@ public class OrderConfirmationUI extends Pane {
         getChildren().addAll(headerLabel, subLabel, confirmationButton); //adding all
     }
     
-    private class OrderConfirmationControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class OrderConfirmationControlsHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(javafx.event.ActionEvent event) { //when a button is clicked make a button click sound
+        public void handle(ActionEvent event) { //when a button is clicked make a button click sound
             Sounds.playButtonClick();
             if (event.getSource() == confirmationButton) { //display order confirmation if the confirmation button is hit
                 SunDevilPizza.newRoot(new CustomerPortalUI(SunDevilPizza.width, SunDevilPizza.height));

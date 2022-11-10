@@ -1,4 +1,5 @@
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -122,9 +123,9 @@ public class LoginUI extends Pane {
     }
     
     //Handler for all UI controls...
-    private class LoginControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class LoginControlsHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             Sounds.playButtonClick(); //Calls Sounds class to play audio when pane is clicked
             if (event.getSource() == signInButton) { //Checks if "Sign In" button is clicked
                 if (type.equalsIgnoreCase("asurite")) { //Checks if type from constructor parameter list is a customer's ASURITEID

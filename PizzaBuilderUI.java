@@ -1,4 +1,5 @@
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -114,9 +115,9 @@ public class PizzaBuilderUI extends Pane {
     }
     
     //Handler for all UI controls...
-    private class PizzaBuilderControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class PizzaBuilderControlsHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             Sounds.playButtonClick();
             if (event.getSource() == backButton) {
                 SunDevilPizza.previousRoot();

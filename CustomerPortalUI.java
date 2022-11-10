@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -78,9 +79,9 @@ public class CustomerPortalUI extends Pane{
     }
     
     //Button handler for pane including audible button click sound and home button
-    private class CustomerPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class CustomerPortalControlsHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             Sounds.playButtonClick();
             if (event.getSource() == homeButton) {
                 SunDevilPizza.home();

@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -75,9 +76,9 @@ public class WelcomeUI extends Pane {
         getChildren().addAll(mainLogoBanner, loginButton, startButton, counter); // initializing the pane
     }
     
-    private class WelcomePageControlsHandler implements EventHandler<javafx.event.ActionEvent> { //control handler for the welcome page
+    private class WelcomePageControlsHandler implements EventHandler<ActionEvent> { //control handler for the welcome page
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             Sounds.playButtonClick(); // when button is clicked play a sound
             if (event.getSource() == loginButton) { // if login button is clicked
                 SunDevilPizza.newRoot(new LoginUI("ASURITE", SunDevilPizza.width, SunDevilPizza.height)); // new LoginUI

@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -115,7 +116,7 @@ public class EmployeePortalUI extends Pane{
         return toppingsBasePane; //Returns completed queue pane 
     }
     
-    private class AdminPortalControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class AdminPortalControlsHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(javafx.event.ActionEvent event) {
             Sounds.playButtonClick();

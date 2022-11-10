@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -35,9 +36,9 @@ public class SelectionBar extends Pane {
     }
     
     //Handler for all UI controls...
-    private class ControlsHandler implements EventHandler<javafx.event.ActionEvent> {
+    private class ControlsHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(javafx.event.ActionEvent event) {
+        public void handle(ActionEvent event) {
             Sounds.playButtonClick(); //Plays button click sound
             if (currentSelection == (Button)event.getSource()) { //creates color response to being clicked
                 currentSelection.setStyle(defaultButtonStyle);
