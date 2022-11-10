@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 public class WelcomeUI extends Pane {
     //Declaring Variables...
@@ -18,7 +19,7 @@ public class WelcomeUI extends Pane {
     
     //Constructor
     WelcomeUI(int width, int height) {
-        clickCount = 0;
+        clickCount = 410;
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
@@ -33,7 +34,10 @@ public class WelcomeUI extends Pane {
             mainLogoBanner.layoutXProperty().bind(this.widthProperty().subtract(mainLogoBanner.getFitWidth()).divide(2)); // defines the horozontal properties
             mainLogoBanner.layoutYProperty().set(140);
             mainLogoBanner.setOnMouseClicked(event ->  { //Balasooriya mode easter egg
-                if (clickCount == 68) {
+                if (clickCount < 420) {
+                    clickCount++;
+                }
+                if (clickCount >= 69) {
                     try {
                         Image cursor = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "bala.png"));//pulls the pizza cutter image from the resource folder and sets the cursor as the pizza cutter
                         this.getScene().setCursor(new ImageCursor(cursor)); //initalizes new cursor
@@ -42,8 +46,21 @@ public class WelcomeUI extends Pane {
                         System.out.println(e); //if an exception is caught print in the console log
                     }
                 }
-                if (clickCount < 69) {
-                    clickCount++;
+                if (clickCount == 420) {
+                    try {
+                        Image cursor = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "cutter.png"));//pulls the pizza cutter image from the resource folder and sets the cursor as the pizza cutter
+                        this.getScene().setCursor(new ImageCursor(cursor)); //initalizes new cursor
+                    }
+                    catch (Exception e) {
+                        System.out.println(e); //if an exception is caught print in the console log
+                    }
+                    try {
+                      Image icon = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "bala.png"));
+                      ((Stage)this.getScene().getWindow()).getIcons().add(icon); //sets the icon on the stage
+                    }
+                    catch (Exception e) {
+                        System.out.println(e); //if an exception is caught print in the console log
+                    }
                 }
                 counter.setText(String.valueOf(clickCount));
             });
