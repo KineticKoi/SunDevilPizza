@@ -19,7 +19,6 @@ public class WelcomeUI extends Pane {
     
     //Constructor
     WelcomeUI(int width, int height) {
-        clickCount = 410;
         setWidth(width); //Sets this pane width
         setHeight(height); //Sets this pane height
         setStyle("-fx-background-color: #FFFFFF");
