@@ -30,30 +30,36 @@ public class CustomerPortalUI extends Pane
         setHeight(height);
         // Sets background to be white
         setStyle("-fx-background-color: #FFFFFF");
-        // Creates label with text "Current Orders"
-        currentOrdersLabel = new Label("Current Orders:");
-        // Sets label text font and size
-        currentOrdersLabel.setFont(new Font("Arial", 40));
-        // Relocates new label to (100, 80)
-        currentOrdersLabel.relocate(100, 80);
-        // Iterate through customer's orders and filter into currentOrderList or previousOrderList
-        iterateOrders();
-        // Creates new scrollpane
-        currentOrderSP = new ScrollPane();
-        // Relocates new scrollpane to (100, 160)
-        currentOrderSP.relocate(100, 160);
-        // Sets scrollpane's preffered width to 800
-        currentOrderSP.setPrefWidth(800);
-        // Sets scrollpane's preffered height to 240
-        currentOrderSP.setPrefHeight(240);
-        // Sets scrollpane's contents to be a list of current pizza orders
-        currentOrderSP.setContent(createQueuePane(currentOrderList));
-        // Creates new label with text "Previous Orders"
-        orderHistoryLabel = new Label("Previous Orders:");
-        // Sets new label's text font and size
-        orderHistoryLabel.setFont(new Font("Arial", 40));
-        // Relocates label to (100, 520)
-        orderHistoryLabel.relocate(100, 520);
+        
+        // Configure currentOrdersLabel
+        configureCurrentOrdersLabel();
+        
+        // Configure currentOrderSP
+        configureCurrentOrderSP();
+
+        // Configure orderHistoryLabel
+        configureOrderHistoryLabel();
+        
+        // Configure orderHistorySP
+        configureOrderHistorySP();
+
+        // Configure homeButton
+        configureHomeButton();
+        
+        // Adds everything to pane
+        getChildren().addAll(currentOrdersLabel, currentOrderSP, orderHistoryLabel, orderHistorySP, homeButton);
+    }
+
+    public void configureHomeButton()
+    {
+        // Creates new button with text "home"
+        homeButton = new ButtonMaker("home");
+        // Sets up home buttons handler
+        homeButton.setOnAction(new CustomerPortalControlsHandler());
+    }
+
+    public void configureOrderHistorySP()
+    {
         // Creates new scrollpane
         orderHistorySP = new ScrollPane();
         // Relocates new scrollpane to (100, 600)
@@ -64,15 +70,47 @@ public class CustomerPortalUI extends Pane
         orderHistorySP.setPrefHeight(240);
         // Sets scrollpane's contents to be a list of previous pizza orders
         orderHistorySP.setContent(createQueuePane(previousOrderList));
-        // Creates new button with text "home"
-        homeButton = new ButtonMaker("home");
-        // Sets up home buttons handler
-        homeButton.setOnAction(new CustomerPortalControlsHandler());
-        // Adds everything to pane
-        getChildren().addAll(currentOrdersLabel, currentOrderSP, orderHistoryLabel, orderHistorySP, homeButton);
+    }
+
+    public void configureOrderHistoryLabel()
+    {
+        // Creates new label with text "Previous Orders"
+        orderHistoryLabel = new Label("Previous Orders:");
+        // Sets new label's text font and size
+        orderHistoryLabel.setFont(new Font("Arial", 40));
+        // Relocates label to (100, 520)
+        orderHistoryLabel.relocate(100, 520);
+    }
+
+    public void configureCurrentOrderSP()
+    {
+        // Creates new scrollpane
+        currentOrderSP = new ScrollPane();
+        // Relocates new scrollpane to (100, 160)
+        currentOrderSP.relocate(100, 160);
+        // Sets scrollpane's preffered width to 800
+        currentOrderSP.setPrefWidth(800);
+        // Sets scrollpane's preffered height to 240
+        currentOrderSP.setPrefHeight(240);
+        // Sets scrollpane's contents to be a list of current pizza orders
+        currentOrderSP.setContent(createQueuePane(currentOrderList));
+    }
+
+    // Method for configuring the current orders label
+    public void configureCurrentOrdersLabel()
+    {
+        // Creates label with text "Current Orders"
+        currentOrdersLabel = new Label("Current Orders:");
+        // Sets label text font and size
+        currentOrdersLabel.setFont(new Font("Arial", 40));
+        // Relocates new label to (100, 80)
+        currentOrdersLabel.relocate(100, 80);
+        // Iterate through customer's orders and filter into currentOrderList or
+        // previousOrderList
+        iterateOrders();
     }
     
-    //Method for iterating through a customer's orders
+    // Method for iterating through a customer's orders
     public void iterateOrders()
     {
         Customer customer = (Customer)SunDevilPizza.session.getUser();
