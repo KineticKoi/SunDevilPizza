@@ -11,8 +11,10 @@ import javafx.scene.text.Font;
 
 import static jdk.internal.org.jline.terminal.Terminal.MouseTracking.Button;
 
-//class for displaying the order summary
-public class OrderSummaryUI extends Pane { //defining variables
+// class for displaying the order summary
+public class OrderSummaryUI extends Pane
+{    
+    // Defining variables
     private Button backButton;
     private Button forwardButton;
     private Button purchaseButton;
@@ -26,140 +28,205 @@ public class OrderSummaryUI extends Pane { //defining variables
     private TextField emailField;
     private boolean alreadySignedIn = false;
 
-    OrderSummaryUI(int width, int height, String orderSummary) {
-        setWidth(width); //Sets this pane width
-        setHeight(height); //Sets this pane height
+    OrderSummaryUI(int width, int height, String orderSummary)
+    {
+        // Sets this pane width
+        setWidth(width);
+        // Sets this pane height
+        setHeight(height);
         setStyle("-fx-background-color: #FFFFFF");
         
-        orderSummaryTextField = new TextArea(); //creating a new non editable text area that will display the order summary
-        orderSummaryTextField.setPrefWidth(600); //600 x 200 px size
+        // creating a new non editable text area that will display the order summary
+        orderSummaryTextField = new TextArea();
+        // 600 x 200 px size
+        orderSummaryTextField.setPrefWidth(600);
         orderSummaryTextField.setPrefHeight(200);
-        orderSummaryTextField.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2)); //setting the size of the text feild in relation to the overall layout
+        // setting the size of the text feild in relation to the overall layout
+        orderSummaryTextField.layoutXProperty().bind(this.widthProperty().
+            subtract(orderSummaryTextField.getPrefWidth()).divide(2));
         orderSummaryTextField.layoutYProperty().set(220);
         orderSummaryTextField.setEditable(false);
         orderSummaryTextField.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
         orderSummaryTextField.setText(orderSummary);
         
-        orderSummaryLabel = new Label("Order Summary:"); //Order summary label to denote which page the user is on
-        orderSummaryLabel.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2)); //setting horizontal label in relation to everything else
-        orderSummaryLabel.layoutYProperty().set(140); //setting static width
+        // Order summary label to denote which page the user is on
+        orderSummaryLabel = new Label("Order Summary:");
+        // setting horizontal label in relation to everything else
+        orderSummaryLabel.layoutXProperty().bind(this.widthProperty().
+            subtract(orderSummaryTextField.getPrefWidth()).divide(2));
+        // setting static width
+        orderSummaryLabel.layoutYProperty().set(140);
         orderSummaryLabel.setFont(new Font("Arial", 40));
         
-        completePurchaseLabel = new Label("Complete Purchase:"); //complete purchase label
+        // complete purchase label
+        completePurchaseLabel = new Label("Complete Purchase:");
         completePurchaseLabel.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2));
         completePurchaseLabel.layoutYProperty().set(520);
         completePurchaseLabel.setFont(new Font("Arial", 40));
         
-        asuriteIDField = new TextField(); //initiating a user editable text field which will take a string input from the user to save as an ASURITE ID
+        // initiating a user editable text field which will take a string input from the user to save as an ASURITE ID
+        asuriteIDField = new TextField();
         asuriteIDField.setPrefSize(600, 40);
         asuriteIDField.layoutXProperty().bind(this.widthProperty().subtract(asuriteIDField.getPrefWidth()).divide(2));
         asuriteIDField.layoutYProperty().set(600);
         asuriteIDField.setPromptText("ASURITE ID");
         asuriteIDField.setStyle("-fx-background-color: lightgrey;");
         
-        passwordField = new PasswordField(); //initiating a user editable text field which will take a string input from the user to save as an unique PASSWORD
+        // initiating a user editable text field which will take a string input from the user to save as an
+        // unique PASSWORD
+        passwordField = new PasswordField();
         passwordField.setPrefSize(600, 40);
         passwordField.layoutXProperty().bind(this.widthProperty().subtract(asuriteIDField.getPrefWidth()).divide(2));
         passwordField.layoutYProperty().set(660);
         passwordField.setStyle("-fx-background-color: lightgrey;");
         passwordField.setVisible(false);
         
-        signedInAsLabel = new Label(""); //Invisible label to be hidden from the user
+        // Invisible label to be hidden from the user
+        signedInAsLabel = new Label("");
         signedInAsLabel.layoutXProperty().bind(this.widthProperty().subtract(orderSummaryTextField.getPrefWidth()).divide(2));
         signedInAsLabel.layoutYProperty().set(600);
         signedInAsLabel.setFont(new Font("Arial", 40));
         signedInAsLabel.setVisible(false);
         
-        verifyButton = new Button("Verify ID"); //Button to verify that the ASURITE ID is valid
+        // Button to verify that the ASURITE ID is valid
+        verifyButton = new Button("Verify ID");
         verifyButton.setPrefSize(160, 40);
         verifyButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
         verifyButton.layoutXProperty().bind(this.widthProperty().subtract(verifyButton.widthProperty()).divide(2));
         verifyButton.setLayoutY(660);
         verifyButton.setOnAction(new OrderSummaryControlsHandler());
         
-        emailField = new TextField(); //initiating a user editable text field which will take a string input from the user to save as an unique EMAIL to send updates to the user
+        // initiating a user editable text field which will take a string input from the
+        // user to save as an unique EMAIL to send updates to the user
+        emailField = new TextField();
         emailField.setPrefSize(600, 40);
         emailField.layoutXProperty().bind(this.widthProperty().subtract(asuriteIDField.getPrefWidth()).divide(2));
         emailField.layoutYProperty().set(720);
         emailField.setPromptText("Email Address");
         emailField.setStyle("-fx-background-color: lightgrey;");
         
-        purchaseButton = new Button("Purchase"); //A PURCHASE button to complete the transaction
+        // A PURCHASE button to complete the transaction
+        purchaseButton = new Button("Purchase");
         purchaseButton.setPrefSize(160, 40);
         purchaseButton.setStyle("-fx-text-fill: black; -fx-background-color: lightgrey;");
         purchaseButton.layoutXProperty().bind(this.widthProperty().subtract(purchaseButton.widthProperty()).divide(2));
         purchaseButton.setLayoutY(800);
         purchaseButton.setOnAction(new OrderSummaryControlsHandler());
         
-        backButton = new ButtonMaker("back"); //A BACK button to navigate the user across roots
+        // A BACK button to navigate the user across roots
+        backButton = new ButtonMaker("back");
         backButton.setOnAction(new OrderSummaryControlsHandler());
         
-        if (!((Customer)SunDevilPizza.session.getUser()).getIDNum().equals("-1")) { //If the user is logged in already
-            asuriteIDField.setVisible(false); //hide the field where a ASURITE id is required
+        // If the user is logged in already
+        if (!((Customer)SunDevilPizza.session.getUser()).getIDNum().equals("-1"))
+        {
+            // hide the field where a ASURITE id is required
+            asuriteIDField.setVisible(false);
             verifyButton.setVisible(false);
-            Customer customer = (Customer)SunDevilPizza.session.getUser(); //getting the user ID
-            signedInAsLabel.setText("Signed in as ASURITE ID: " + customer.getIDNum()); //displaying the USER's ASURITE ID
-            alreadySignedIn = true; //The user is signed in
-            signedInAsLabel.setVisible(true); //visual confirmation that user is signed in
+            // getting the user ID
+            Customer customer = (Customer)SunDevilPizza.session.getUser();
+            // displaying the USER's ASURITE ID
+            signedInAsLabel.setText("Signed in as ASURITE ID: " + customer.getIDNum());
+            // The user is signed in
+            alreadySignedIn = true;
+            // visual confirmation that user is signed in
+            signedInAsLabel.setVisible(true);
         }
-        //adding all
+        // adding all
         getChildren().addAll(orderSummaryLabel, orderSummaryTextField, completePurchaseLabel, asuriteIDField, signedInAsLabel, verifyButton, passwordField, emailField, purchaseButton, backButton);  
     }
     
-    //Handler for all UI controls...
-    private class OrderSummaryControlsHandler implements EventHandler<ActionEvent> {
+    // Handler for all UI controls
+    private class OrderSummaryControlsHandler implements EventHandler<ActionEvent>
+    {
         @Override
-        public void handle(ActionEvent event) { //every time a button is clicked make a button click noise
+        // every time a button is clicked make a button click noise
+        public void handle(ActionEvent event)
+        {
             Sounds.playButtonClick();
-            if (event.getSource() == backButton) { //go back to the previous root if BACK is clicked
+            // go back to the previous root if BACK is clicked
+            if (event.getSource() == backButton)
+            {
                 SunDevilPizza.previousRoot();
             }
-            if (event.getSource() == verifyButton) { //if the VERIFY button is clicked
-                boolean exists = FileManager.existingCustomer(asuriteIDField.getText()); //check if there is an existing customer that has the same ASURITE ID
-                if (exists == true) { //if there is an existing user
-                    verifyButton.setVisible(false); //verify button is no longer visible as now we are requesting a password
-                    passwordField.setPromptText("Enter your password");
-                    passwordField.setVisible(true); //password field is visible and prompts user to enter password
-                    completePurchaseLabel.setStyle("-fx-text-fill: black;");
-                }
-                else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText())){ //if the user does not exist and the ASURITE ID is correctly formatted
-                    SunDevilPizza.session.setUser(new Customer(asuriteIDField.getText()));
+            // if the VERIFY button is clicked
+            if (event.getSource() == verifyButton)
+            {
+                // check if there is an existing customer that has the same ASURITE ID
+                boolean exists = FileManager.existingCustomer(asuriteIDField.getText());
+                // if there is an existing user
+                if (exists == true)
+                { 
+                    // verify button is no longer visible as now we are requesting a password
                     verifyButton.setVisible(false);
-                    passwordField.setPromptText("Create a new password"); //user is prompted to to create a password
+                    passwordField.setPromptText("Enter your password");
+                    // password field is visible and prompts user to enter password
                     passwordField.setVisible(true);
                     completePurchaseLabel.setStyle("-fx-text-fill: black;");
                 }
-                else {
-                    completePurchaseLabel.setStyle("-fx-text-fill: red;"); //if there is an error the button is red
+                // if the user does not exist and the ASURITE ID is correctly formatted
+                else if (CredentialVerification.isAnAsuriteID(asuriteIDField.getText()))
+                {
+                    SunDevilPizza.session.setUser(new Customer(asuriteIDField.getText()));
+                    verifyButton.setVisible(false);
+                    // user is prompted to to create a password
+                    passwordField.setPromptText("Create a new password");
+                    passwordField.setVisible(true);
+                    completePurchaseLabel.setStyle("-fx-text-fill: black;");
+                }
+                else
+                {
+                    // if there is an error the button is red
+                    completePurchaseLabel.setStyle("-fx-text-fill: red;");
                 }
             }
-            if(event.getSource() == purchaseButton) { //if purcase button is clicked
-                if (emailField.getText().contains("@") && emailField.getText().contains(".") && (alreadySignedIn || !asuriteIDField.getText().equals("") && !passwordField.getText().equals(""))) { //if the email field is populated and if the user is signed in or the feilds are populated
-                    Customer customer; //create a customer
-                    if (FileManager.existingCustomer(asuriteIDField.getText())) { //check if it is an existing customer
-                        customer = CredentialVerification.customerLoginCheck("asurite", asuriteIDField.getText(), passwordField.getText());
-                        if (customer != null) { //if it is, set the session to that customer
-                            SunDevilPizza.session.setUser(customer); //set it to the already signed in customer
+            // if purcase button is clicked
+            if(event.getSource() == purchaseButton)
+            {
+                // if the email field is populated and if the user is signed in or the feilds are populated
+                if (emailField.getText().contains("@") && emailField.getText().contains(".") &&
+                    (alreadySignedIn || !asuriteIDField.getText().equals("") && !passwordField.getText().equals("")))
+                {
+                    // create a customer
+                    Customer customer;
+                    // check if it is an existing customer
+                    if (FileManager.existingCustomer(asuriteIDField.getText()))
+                    {
+                        customer = CredentialVerification.customerLoginCheck("asurite",
+                            asuriteIDField.getText(), passwordField.getText());
+                        // if it is, set the session to that customer
+                        if (customer != null)
+                        {
+                            // set it to the already signed in customer
+                            SunDevilPizza.session.setUser(customer);
                         }
-                        else {
+                        else
+                        {
                             completePurchaseLabel.setStyle("-fx-text-fill: red;");
                             return;
                         }
                     }
-                    else if (!passwordField.getText().equals("")){ //get the user password to create a new customer
+                    // get the user password to create a new customer
+                    else if (!passwordField.getText().equals(""))
+                    {
                         ((Customer)SunDevilPizza.session.getUser()).setPassword(passwordField.getText());
                     }
-                    customer = ((Customer)SunDevilPizza.session.getUser()); //set customer properties including current order, order number, and order status
+                    // set customer properties including current order, order number, and order status
+                    customer = ((Customer)SunDevilPizza.session.getUser());
                     customer.getCurrentOrder().setEmail(emailField.getText());
                     String orderNumber = SunDevilPizza.session.generateOrderNumber();
                     customer.getCurrentOrder().setOrderNumber(orderNumber);
                     customer.getCurrentOrder().setStatus("ACCEPTED");
                     customer.addOrder(customer.getCurrentOrder());
                     customer.resetCurrentOrder();
-                    FileManager.saveCustomer(customer); //save the customer
-                    SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width, SunDevilPizza.height, orderNumber)); //new customer confirmation login
+                    // save the customer
+                    FileManager.saveCustomer(customer);
+                    // new customer confirmation login
+                    SunDevilPizza.newRoot(new OrderConfirmationUI(SunDevilPizza.width,
+                        SunDevilPizza.height, orderNumber));
                 }
-                else {
+                else
+                {
                     completePurchaseLabel.setStyle("-fx-text-fill: red;");
                 }
             }
