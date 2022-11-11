@@ -7,70 +7,113 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 
-//Class builds Large selection bars for use throughout program
-public class LargeSelectionBar extends Pane {
-    //Declaring Variables...
+// Class builds Large selection bars for use throughout program
+public class LargeSelectionBar extends Pane
+{
+    // Declaring Variables
     private Label optionLabel;
     private List<Button> buttonList;
     private String selectionType;
     private Button currentSelection;
     private final String defaultButtonStyle = "-fx-text-fill: black; -fx-background-color: lightgrey;";
     
-    //Constructor
-    LargeSelectionBar(String selectionType, String labelText, int numOfButtons, String[] buttonText) {
-        setWidth(600); //Sets this pane width
-        setHeight(400); //Sets this pane height
+    // Constructor
+    LargeSelectionBar(String selectionType, String labelText, int numOfButtons, String[] buttonText)
+    {
+        // Sets this pane width
+        setWidth(600);
+        // Sets this pane height
+        setHeight(400);
         this.selectionType = selectionType;
-        optionLabel = new Label(labelText); //Sets label text from labelText string in method parameters
-        optionLabel.setFont(new Font("Arial", 28)); //Sets label text size and font
-        optionLabel.relocate(5, 5); //Relocates label 
-        buttonList = new ArrayList<>(numOfButtons); //Creates a new list ArrayList of buttons
-        getChildren().add(optionLabel); //Adds created label to pane
-        for (int i = 0; i < numOfButtons; i++) { //Looping for number of buttons that selection bar will have
-            buttonList.add(new Button()); //Adds new button to the list
-            buttonList.get(i).setText(buttonText[i]); //Sets text of current indexed button
-            buttonList.get(i).setPrefSize(220, 80); //Set's current indexed button's preffered size to (220, 80)
-            buttonList.get(i).relocate((i * 260), 60); //Relocate button 
-            buttonList.get(i).setStyle(defaultButtonStyle); //Sets style of new button to have black text and lightgrey background
-            buttonList.get(i).setFont(new Font("Arial", 28)); //Set's button text font and size
-            buttonList.get(i).setOnAction(new ControlsHandler()); //Sets up control handler for button
-            getChildren().add(buttonList.get(i)); //Adding current button to list 
+        // Sets label text from labelText string in method parameters
+        optionLabel = new Label(labelText);
+        // Sets label text size and font
+        optionLabel.setFont(new Font("Arial", 28));
+        // Relocates label
+        optionLabel.relocate(5, 5);
+        // Creates a new list ArrayList of buttons
+        buttonList = new ArrayList<>(numOfButtons);
+        // Adds created label to pane
+        getChildren().add(optionLabel);
+        // Looping for number of buttons that selection bar will have
+        for (int i = 0; i < numOfButtons; i++)
+        {
+            // Adds new button to the list
+            buttonList.add(new Button());
+            // Sets text of current indexed button
+            buttonList.get(i).setText(buttonText[i]);
+            // Set's current indexed button's preffered size to (220, 80)
+            buttonList.get(i).setPrefSize(220, 80);
+            // Relocate button
+            buttonList.get(i).relocate((i * 260), 60);
+            // Sets style of new button to have black text and lightgrey background
+            buttonList.get(i).setStyle(defaultButtonStyle);
+            // Set's button text font and size
+            buttonList.get(i).setFont(new Font("Arial", 28));
+            // Sets up control handler for button
+            buttonList.get(i).setOnAction(new ControlsHandler());
+            // Adding current button to list
+            getChildren().add(buttonList.get(i));
         }
     }
     
-    //Handler for all UI controls...
-    private class ControlsHandler implements EventHandler<ActionEvent> {
+    // Handler for all UI controls...
+    private class ControlsHandler implements EventHandler<ActionEvent>
+    {
         @Override
-        public void handle(ActionEvent event) {
-            Sounds.playButtonClick(); //Calls sound class to play audio when a button is clicked
-            if (currentSelection == (Button)event.getSource()) { //Checks if button has already been toggled
-                currentSelection.setStyle(defaultButtonStyle); //Sets button color to the default light grey
-                if (selectionType.equals("size")) { //Checking if button labeled "size" was clicked
+        public void handle(ActionEvent event)
+        {
+            // Calls sound class to play audio when a button is clicked
+            Sounds.playButtonClick();
+            // Checks if button has already been toggled
+            if (currentSelection == (Button)event.getSource())
+            {
+                // Sets button color to the default light grey
+                currentSelection.setStyle(defaultButtonStyle);
+                // Checking if button labeled "size" was clicked
+                if (selectionType.equals("size"))
+                {
                     ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setSize(null);
-                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary(); //Updates pizza being currently built to show changes
+                    // Updates pizza being currently built to show changes
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
                 }
-                else if (selectionType.equals("type")) { //Checking if button labeled "type" was clicked
+                // Checking if button labeled "type" was clicked
+                else if (selectionType.equals("type"))
+                {
                     ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setType(null);
-                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary(); //Updates pizza being currently built to show changes
+                    // Updates pizza being currently built to show changes
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
                 }
-                currentSelection = null; //Setting button clikced to null to work as a toggle 
+                // Setting button clikced to null to work as a toggle
+                currentSelection = null;
             }
-            else {
-                currentSelection = (Button)event.getSource(); //Checks if button has not been toggled
-                if (selectionType.equals("size")) { //Checking if button labeled "size" was clicked
+            else
+            {
+                // Checks if button has not been toggled
+                currentSelection = (Button)event.getSource();
+                // Checking if button labeled "size" was clicked
+                if (selectionType.equals("size"))
+                {
                     ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setSize(((Button)event.getSource()).getText());
-                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary(); //Updates pizza being currently built to show changes
+                    // Updates pizza being currently built to show changes
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
                 }
-                else if (selectionType.equals("type")) { //Checking if button labeled "type" was clicked
+                // Checking if button labeled "type" was clicked
+                else if (selectionType.equals("type"))
+                {
                     ((Customer)SunDevilPizza.session.getUser()).getCurrentOrder().getPizza().setType(((Button)event.getSource()).getText());
-                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary(); //Updates pizza being currently built to show changes
+                    // Updates pizza being currently built to show changes
+                    ((PizzaBuilderUI)currentSelection.getScene().getRoot()).refreshOrderSummary();
                 }
-                for (int i = 0; i < buttonList.size(); i++) { //Looping for size of button list
-                    buttonList.get(i).setStyle(defaultButtonStyle); //Setting style of each button in button list to have black text and a lightgrey background
+                // Looping for size of button list
+                for (int i = 0; i < buttonList.size(); i++)
+                {
+                    // Setting style of each button in button list to have black text and a lightgrey background
+                    buttonList.get(i).setStyle(defaultButtonStyle);
                 }
-                currentSelection.setStyle("-fx-text-fill: black; -fx-background-color: #90ee90"); //Toggling button to change background to light green
+                // Toggling button to change background to light green
+                currentSelection.setStyle("-fx-text-fill: black; -fx-background-color: #90ee90");
             }
         }
-    }
-    
-} //End of LargeSelection class
+    }   
+}
