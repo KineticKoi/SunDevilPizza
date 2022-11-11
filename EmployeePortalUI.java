@@ -34,11 +34,44 @@ public class EmployeePortalUI extends Pane
         // Sets current employee type to type in constructor parameters
         this.type = type;
 
-        // Creates new button with text "home"
-        homeButton = new ButtonMaker("home");
-        // Setting up eventhandler for pane's buttons
-        homeButton.setOnAction(new AdminPortalControlsHandler());
+        // Configure homeButton
+        configureHomeButton();
+
+        // Configure queueSP
+        configureQueueSP();
+
+        // Configure headerLabel
+        configureHeaderLabel();
         
+        // Configure message
+        configureMessage();
+        
+        // Adding everything to pane
+        getChildren().addAll(headerLabel, homeButton, queueSP, message);
+    }
+
+    public void configureMessage()
+    {
+        message = new Label("");
+        message.setFont(new Font("Arial", 32));
+        message.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
+        message.layoutYProperty().set(640);
+    }
+
+    public void configureHeaderLabel()
+    {
+        // Sets label's text to "Queue"
+        headerLabel = new Label(type + " Queue:");
+        // Sets label's font and text size
+        headerLabel.setFont(new Font("Arial", 40));
+        // Sets label's centering X value
+        headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
+        // Moving scrollPane down slightely
+        headerLabel.layoutYProperty().set(320);
+    }
+
+    public void configureQueueSP()
+    {
         // Creates new scrollpane
         queueSP = new ScrollPane();
         // Sets scrollpane preffered width to 800
@@ -51,27 +84,19 @@ public class EmployeePortalUI extends Pane
         queueSP.layoutYProperty().set(400);
         // Creates a new file array for the file path to customer records file
         File[] customerFileList = new File(SunDevilPizza.customerFilesPath).listFiles();
-        // Makes a method call to iterateCustomers and passes in the newly created customerFileList object
+        // Makes a method call to iterateCustomers and passes in the newly created
+        // customerFileList object
         iterateCustomers(customerFileList);
         // Sets scrollpane content by making a method call to create a new queuepane
         queueSP.setContent(createQueuePane());
-        
-        // Sets label's text to "Queue"
-        headerLabel = new Label(type + " Queue:");
-        // Sets label's font and text size
-        headerLabel.setFont(new Font("Arial", 40));
-        // Sets label's centering X value
-        headerLabel.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2)); 
-        // Moving scrollPane down slightely
-        headerLabel.layoutYProperty().set(320); 
-        
-        message = new Label("");
-        message.setFont(new Font("Arial", 32));
-        message.layoutXProperty().bind(this.widthProperty().subtract(queueSP.getPrefWidth()).divide(2));
-        message.layoutYProperty().set(640);
-        
-        // Adding everything to pane
-        getChildren().addAll(headerLabel, homeButton, queueSP, message);
+    }
+
+    public void configureHomeButton()
+    {
+        // Creates new button with text "home"
+        homeButton = new ButtonMaker("home");
+        // Setting up eventhandler for pane's buttons
+        homeButton.setOnAction(new AdminPortalControlsHandler());
     }
     
     // Method iterates through customer order records to check whether for which orders have finished

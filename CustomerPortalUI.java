@@ -96,7 +96,6 @@ public class CustomerPortalUI extends Pane
         currentOrderSP.setContent(createQueuePane(currentOrderList));
     }
 
-    // Method for configuring the current orders label
     public void configureCurrentOrdersLabel()
     {
         // Creates label with text "Current Orders"
