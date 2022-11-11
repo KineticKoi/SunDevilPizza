@@ -9,8 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-//Launches the main application
-public class SunDevilPizza extends Application {
+// Launches the main application
+public class SunDevilPizza extends Application
+{
     // defines resources directory
     public static final String resourcesPath = "./resources/";
     // defines area to save customer files
@@ -26,7 +27,8 @@ public class SunDevilPizza extends Application {
     public static Session session = new Session(); 
     
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
         // Generates a new GUI scene
         scene = new Scene(new WelcomeUI(width, height), width, height); 
         // sets a new root that is derived from the root of the new generated scene
@@ -36,7 +38,8 @@ public class SunDevilPizza extends Application {
         // Sets the window scene
         stage.setScene(scene); 
         //try { //Custom cursor, icons, and CSS
-        try {
+        try
+        {
             // pulls the sun devil pizza logo from the resources folder and sets the icon
             // image as it
             Image icon = new Image(new FileInputStream(SunDevilPizza.resourcesPath + "sdpLogoIcon.png")); 
@@ -50,7 +53,8 @@ public class SunDevilPizza extends Application {
             // uses the custom css to create a style for the scene
             scene.getStylesheets().add("sdp.css"); 
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             // if an exception is caught print in the console log
             System.out.println(e); 
         }
@@ -61,24 +65,29 @@ public class SunDevilPizza extends Application {
     }
     
     //Main
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
     
     //Sets new Root node
-    public static void newRoot(Parent node) {        
+    public static void newRoot(Parent node)
+    {        
         scene.setRoot(node);
         rootNodes.add(scene.getRoot());
         currentRootIndex++;
     }
     
     //Sets Root to previous node
-    public static void previousRoot() {
+    public static void previousRoot()
+    {
         // if the root index is 1, go to node 0 which is home
-        if (currentRootIndex == 1) { 
+        if (currentRootIndex == 1)
+        { 
             home();
         }
-        else {
+        else
+        {
             scene.setRoot(rootNodes.get(currentRootIndex - 1));
             // tracks what node of the page the user is on by moving one node back and
             // updating the nodelist
@@ -87,9 +96,11 @@ public class SunDevilPizza extends Application {
     }
     
     //Sets Root to next node
-    public static boolean nextRoot() {
+    public static boolean nextRoot()
+    {
         // checks if the next node can exist
-        if (rootNodes.size() > currentRootIndex + 1) { 
+        if (rootNodes.size() > currentRootIndex + 1)
+        { 
             // sets the next root
             scene.setRoot(rootNodes.get(currentRootIndex + 1)); 
             // updates the root index
@@ -102,9 +113,11 @@ public class SunDevilPizza extends Application {
     }
     
     //Returns app to welcome screen
-    public static void home() {
+    public static void home()
+    {
         // removes all of the nodes in the list iteratively
-        for (int i = rootNodes.size() - 1; i > 0; i--) { 
+        for (int i = rootNodes.size() - 1; i > 0; i--)
+        { 
             rootNodes.remove(i);
         }
         // resets the root node index to home
