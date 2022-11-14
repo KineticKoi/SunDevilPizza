@@ -1,47 +1,32 @@
+
 import java.util.Random;
 import java.util.UUID;
 
-public class Session
-{
-    // creates a user
-    private User user;
-    // creates a random session id
-    private final UUID sessionID = UUID.randomUUID();
-    // sets the user as null by default
-    Session()
-    {
+public class Session {
+    private User user; //creates a user
+    private final UUID sessionID = UUID.randomUUID(); //creates a random session id
+    Session() {
         user = null;
-    }
+    } //sets the user as null by default
 
-    // user getter
-    public User getUser()
-    {
+    public User getUser() {
         return user;
-    }
+    } //user getter
     
-    // user setter
-    public void setUser(User user)
-    {
+    public void setUser(User user) {
         this.user = user;
-    }
+    } //user setter
     
-    // session ID getter
-    public UUID getSessionID()
-    {
+    public UUID getSessionID() {
         return sessionID;
-    }
+    } //session ID getter
 
-    // generate a unique order number
-    public String generateOrderNumber()
-    {
+    public String generateOrderNumber() { //generate a unique order number
         Random rand = new Random();
-        // creating a new random number that will serve as the order number
-        int num = rand.nextInt(999999);
-        // converts the order number to a string filling the blanks with zeros up to 6 digits
-        String orderNumber = String.format("%06d", num);
-        // creates a delimiter between the zeros and the order number
-        orderNumber = orderNumber.substring(0, 2) + "-" + orderNumber.substring(2);
-        // returns the order number
-        return orderNumber;
+        int num = rand.nextInt(999999); //creating a new random number that will serve as the order number
+        String orderNumber = String.format("%06d", num); //converts the order number to a string filling the blanks with zeros up to 6 digits
+        orderNumber = orderNumber.substring(0, 2) + "-" + orderNumber.substring(2); //creates a delimiter between the zeros and the order number
+        return orderNumber; //returns the order number
     }
 }
+
