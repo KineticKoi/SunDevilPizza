@@ -5,85 +5,48 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-// Class sets the images for each button in program
-public class ButtonMaker extends Button
-{
-    // Basic Button Maker
-    ButtonMaker(String type)
-    {
-        // Checking if new button be created is labeled "login"
-       if (type.equalsIgnoreCase("login"))
-       {
-            try
-            {
-                // Sets login button icon
-                setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "login.png"))));
+//Class sets the images for each button in program
+public class ButtonMaker extends Button {
+    //Basic Button Maker
+    ButtonMaker(String type) {
+       if (type.equalsIgnoreCase("login"))  { //Checking if new button be created is labeled "login"
+            try {
+                setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "login.png")))); //Sets login button icon
             }
-            // Exception catch for when login button icon can't be found
-            catch(FileNotFoundException e)
-            {
-
+            catch(FileNotFoundException e) { //Exception catch for when login button icon can't be found
             }   
-            // Relocates login.png icon
-            relocate(1700, 900);
+            relocate(1700, 900); //Relocates login.png icon
         }
-        // Checking if new button be created is labeled "order"
-        else if (type.equalsIgnoreCase("order"))
-        {
-            try
-            {
+        else if (type.equalsIgnoreCase("order"))  { //Checking if new button be created is labeled "order"
+            try {
                 setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "orderButton.png"))));
             }
-            // Exception catch for when order Button icon can't be found
-            catch(FileNotFoundException e)
-            {
-
+            catch(FileNotFoundException e) { //Exception catch for when order Button icon can't be found 
             }
         }
-        // Checking if new button be created is labeled "back"
-        else if (type.equalsIgnoreCase("back"))
-        {
-            try
-            {
+        else if (type.equalsIgnoreCase("back")) { //Checking if new button be created is labeled "back"
+            try {
                 setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "backarrow.png"))));
             }
-            // Exception catch for when back arrow icon can't be found
-            catch(FileNotFoundException e)
-            {
-
+            catch(FileNotFoundException e) { //Exception catch for when back arrow icon can't be found
             }
-            // Relocates backarrow.png icon
-            relocate(1640, 900);
+            relocate(1640, 900); //Relocates backarrow.png icon
         }
-        // Checking if new button be created is labeled "forward"
-        else if (type.equalsIgnoreCase("forward"))
-        {
-            try
-            {
+        else if (type.equalsIgnoreCase("forward")) { //Checking if new button be created is labeled "forward"
+            try {
                 setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "forwardarrow.png"))));
             }
-            // Exception catch for when forward arrow icon can't be found
-            catch(FileNotFoundException e)
-            {
-
+            catch(FileNotFoundException e) { //Exception catch for when forward arrow icon can't be found
             }
-            // Relocates forwardarrow.png icon
-            relocate(1740, 900);
+            relocate(1740, 900); //Relocates forwardarrow.png icon
         }
-        // Checking if new button be created is labeled "home"
-        else if (type.equalsIgnoreCase("home"))
-        {
-            try
-            {
+        else if (type.equalsIgnoreCase("home")) { //Checking if new button be created is labeled "home"
+            try {
                 setGraphic(new ImageView(new Image(new FileInputStream(SunDevilPizza.resourcesPath + "homeIcon.png"))));
             }
-            // Exception catch for when home icon can't be found
-            catch(FileNotFoundException e)
-            {
-
+            catch(FileNotFoundException e) { //Exception catch for when home icon can't be found
             }
-            // Relocates homeIcon.png icon
-            relocate(1740, 900);
+            relocate(1740, 900); //Relocates homeIcon.png icon
         }
     }
-}
+} //End of ButtonMaker class
